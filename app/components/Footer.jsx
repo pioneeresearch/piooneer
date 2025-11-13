@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-50 text-gray-700 pt-16 pb-8 px-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 max-w-6xl mx-auto border-b border-gray-200 pb-10">
-        {/* Column 1: Logo + Description */}
+        
         <div>
           <div className="flex items-center gap-2 mb-4">
             <div className="bg-blue-600 text-white w-8 h-8 flex items-center justify-center rounded-lg font-bold text-lg">
@@ -31,7 +31,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Column 2: Quick Links */}
+        
         <div>
           <h3 className="font-semibold text-gray-800 mb-4">Quick Links</h3>
           <ul className="space-y-2 text-sm">
@@ -42,7 +42,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Column 3: Our Services */}
+      
         <div>
           <h3 className="font-semibold text-gray-800 mb-4">Our Services</h3>
           <ul className="space-y-2 text-sm">
@@ -53,7 +53,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Column 4: Get In Touch */}
+       
         <div>
           <h3 className="font-semibold text-gray-800 mb-4">Get In Touch</h3>
           <ul className="space-y-3 text-sm">
@@ -71,7 +71,7 @@ export default function Footer() {
             </li>
           </ul>
 
-          {/* Newsletter */}
+          
           <div className="mt-5">
             <p className="text-sm mb-2">Subscribe to Newsletter</p>
             <div className="flex">
@@ -88,7 +88,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom Line */}
+     
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500 mt-8">
         <p>© 2025 Pioneer Wealth Solutions. All rights reserved.</p>
         <div className="flex gap-4 mt-2 sm:mt-0">

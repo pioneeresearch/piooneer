@@ -31,7 +31,7 @@ export default function FinancialPlanningPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
+    
       <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white text-center py-16 shadow-md">
         <div className="flex justify-center mb-4">
           <Target size={42} className="text-white" />
@@ -44,7 +44,7 @@ export default function FinancialPlanningPage() {
         </p>
       </div>
 
-      {/* Financial Calculators Section */}
+     
       <section className="max-w-6xl mx-auto mt-16 bg-white border border-gray-200 rounded-2xl shadow-lg p-10">
         <h2 className="text-3xl font-bold text-gray-800 text-center mb-2">
           Financial Calculators
@@ -53,7 +53,7 @@ export default function FinancialPlanningPage() {
           Use our interactive tools to plan your investments and understand your returns.
         </p>
 
-        {/* Tabs */}
+       
         <div className="flex justify-center mb-10">
           <div className="bg-gray-100 rounded-xl p-1 flex space-x-2 border border-gray-200">
             {["sip", "retirement", "loan"].map((tab) => (
@@ -78,9 +78,9 @@ export default function FinancialPlanningPage() {
         {activeTab === "sip" && (
           <div className="bg-gray-50 border border-gray-200 p-8 rounded-2xl shadow-inner">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              {/* Left Side - Sliders */}
+              
               <div>
-                {/* Monthly Investment */}
+              
                 <div className="mb-10">
                   <label className="block text-gray-800 font-semibold mb-2">
                     Monthly Investment
@@ -105,7 +105,7 @@ export default function FinancialPlanningPage() {
                   </div>
                 </div>
 
-                {/* Time Period */}
+              
                 <div className="mb-10">
                   <label className="block text-gray-800 font-semibold mb-2">
                     Time Period
@@ -128,7 +128,7 @@ export default function FinancialPlanningPage() {
                   </div>
                 </div>
 
-                {/* Expected Return */}
+               
                 <div className="mb-6">
                   <label className="block text-gray-800 font-semibold mb-2">
                     Expected Return (p.a.)
@@ -152,7 +152,7 @@ export default function FinancialPlanningPage() {
                 </div>
               </div>
 
-              {/* Right Side - Results */}
+             
               <div className="space-y-6">
                 <div className="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
                   <p className="text-gray-500 text-sm">Total Investment</p>
@@ -184,10 +184,10 @@ export default function FinancialPlanningPage() {
         )}
       </section>
 
-      {/* ====================== Talk to Our Experts Section ====================== */}
+      
       <section className="max-w-6xl mx-auto mt-16 bg-white border border-gray-200 rounded-2xl shadow-lg p-10 mb-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-          {/* Left Info Side */}
+        
           <div>
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
               Talk to Our Experts
@@ -229,7 +229,7 @@ export default function FinancialPlanningPage() {
             </div>
           </div>
 
-          {/* Right Form Side */}
+         
           <div className="bg-gray-50 border border-gray-200 rounded-2xl p-8 shadow-inner">
             <form className="space-y-5">
               <div>

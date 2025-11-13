@@ -1,5 +1,6 @@
 import "./globals.css";
 import ClientRootLayout from "./ClientRootLayout";
+import FloatingButtons from "@/components/FloatingButtons";
 
 export const metadata = {
   title: "Pioneer Wealth",
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
       {/* 👇 Client-only logic is now inside ClientRootLayout */}
       <body className="bg-gray-50 flex flex-col min-h-screen">
         <ClientRootLayout>{children}</ClientRootLayout>
+         <FloatingButtons />
       </body>
     </html>
   );

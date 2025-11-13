@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+
 import {
   LayoutDashboard,
   Settings,
@@ -18,6 +19,25 @@ import {
 
 export default function AdminDashboard() {
   const [activeMenu, setActiveMenu] = useState("Dashboard");
+  // Logout function
+  const handleLogout = async () => {
+    try {
+      const res = await fetch("/api/auth/logout", {
+        method: "POST",
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        alert("Logout successful!");
+        window.location.href = "/login"; 
+      } else {
+        alert("Logout failed!");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+      alert("Something went wrong during logout!");
+    }
+  };
 
   const sidebarMenu = [
     { name: "Dashboard", icon: LayoutDashboard },
@@ -123,7 +143,10 @@ export default function AdminDashboard() {
 
         {/* Logout Button */}
         <div className="p-4 border-t border-gray-100">
-          <button className="flex items-center text-red-500 hover:bg-red-50 w-full px-4 py-2 rounded-lg text-sm font-medium transition-all">
+          <button
+            onClick={handleLogout}
+            className="flex items-center text-red-500 hover:bg-red-50 w-full px-4 py-2 rounded-lg text-sm font-medium transition-all"
+          >
             <LogOut className="w-5 h-5 mr-3" /> Logout
           </button>
         </div>
@@ -131,7 +154,7 @@ export default function AdminDashboard() {
 
       {/* ---------- MAIN CONTENT ---------- */}
       <main className="flex-1 p-8 overflow-y-auto">
-        {/* Header */}
+      
         <h1 className="text-3xl font-bold text-gray-800 mb-2">
           Dashboard Overview
         </h1>
@@ -172,7 +195,7 @@ export default function AdminDashboard() {
 
         {/* ---------- BOTTOM SECTION ---------- */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Recent Leads */}
+        
           <div className="bg-white border border-gray-100 rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-300">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold text-gray-800">

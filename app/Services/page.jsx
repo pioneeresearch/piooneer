@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 export default function Services() {
-  // ---------- FILTER STATE ----------
+  
   const [activeCategory, setActiveCategory] = useState("All");
 
   // ---------- SERVICE DATA ----------
@@ -88,24 +88,24 @@ export default function Services() {
       ? services
       : services.filter((service) => service.category === activeCategory);
 
-  // ---------- REUSABLE CARD COMPONENT ----------
+
   function ServiceCard({ icon, color, title, description, features }) {
     return (
       <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-left flex flex-col justify-between">
-        {/* Icon */}
+      
         <div>
           <div
             className={`bg-${color}-100 text-${color}-600 w-14 h-14 flex items-center justify-center rounded-xl mb-5`}
           >
             <i className={`fa-solid ${icon} text-2xl`}></i>
           </div>
-          {/* Title */}
+         
           <h3 className="text-2xl font-semibold text-gray-800 mb-2">{title}</h3>
           <p className="text-gray-600 text-base leading-relaxed mb-4">
             {description}
           </p>
 
-          {/* Features List (optional) */}
+       
           {features && (
             <ul className="text-gray-600 text-sm space-y-2 mb-6">
               {features.map((feature, i) => (
@@ -118,7 +118,6 @@ export default function Services() {
           )}
         </div>
 
-        {/* Enquire Now Button */}
         <button className="mt-auto bg-blue-600 text-white w-full py-3 rounded-xl font-medium hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2 shadow-md">
           Enquire Now <i className="fa-solid fa-arrow-right"></i>
         </button>
@@ -146,7 +145,7 @@ export default function Services() {
   // ---------- PAGE RETURN ----------
   return (
     <>
-      {/* ---------- HEADER SECTION ---------- */}
+     
       <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg mb-16">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
           Our <span className="text-yellow-300">Services</span>
@@ -163,7 +162,7 @@ export default function Services() {
         ))}
       </div>
 
-      {/* ---------- SERVICES GRID ---------- */}
+      
       <section className="max-w-6xl mx-auto px-6 pb-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {filteredServices.map((service) => (
           <ServiceCard

@@ -10,7 +10,7 @@ export default function LoginPage() {
   const [forgotEmail, setForgotEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // ✅ Handle Register Function
+  
   const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -35,7 +35,7 @@ export default function LoginPage() {
     setLoading(false);
   };
 
-  // ✅ Handle Login Function
+  
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -65,7 +65,7 @@ export default function LoginPage() {
     setLoading(false);
   };
 
-  // ✅ Handle Forgot Password Function
+  
   const handleForgot = async (e) => {
     e.preventDefault();
     if (!forgotEmail) return alert("Please enter your email!");
@@ -87,7 +87,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blue-50 via-white to-blue-100 px-4">
-      {/* Logo */}
+      
       <div className="mb-6 flex items-center space-x-2">
         <div className="bg-blue-600 text-white rounded-lg w-9 h-9 flex items-center justify-center font-bold text-lg">
           P
@@ -95,9 +95,9 @@ export default function LoginPage() {
         <h1 className="text-xl font-semibold text-gray-800">Pioneer Wealth</h1>
       </div>
 
-      {/* Auth Card */}
+      
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
-        {/* Tabs */}
+      
         <div className="flex mb-6 bg-gray-100 rounded-xl p-1">
           <button
             onClick={() => setActiveTab("login")}
@@ -132,7 +132,7 @@ export default function LoginPage() {
             </p>
 
             <form className="space-y-5" onSubmit={handleLogin}>
-              {/* Email */}
+              
               <div>
                 <label className="block text-gray-700 font-medium mb-2">
                   Email Address
@@ -148,7 +148,7 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              {/* Password */}
+              
               <div>
                 <label className="block text-gray-700 font-medium mb-2">
                   Password
@@ -170,7 +170,7 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              {/* Remember & Forgot */}
+              
               <div className="flex justify-between items-center text-sm">
                 <label className="flex items-center space-x-2 text-gray-600">
                   <input type="checkbox" className="accent-blue-600" />
@@ -185,7 +185,7 @@ export default function LoginPage() {
                 </button>
               </div>
 
-              {/* Login Button */}
+              
               <button
                 type="submit"
                 disabled={loading}
@@ -220,7 +220,7 @@ export default function LoginPage() {
             </p>
 
             <form className="space-y-5" onSubmit={handleRegister}>
-              {/* Name */}
+             
               <div>
                 <label className="block text-gray-700 font-medium mb-2">
                   Full Name
@@ -233,7 +233,7 @@ export default function LoginPage() {
                 />
               </div>
 
-              {/* Email */}
+              
               <div>
                 <label className="block text-gray-700 font-medium mb-2">
                   Email Address
@@ -249,7 +249,7 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              {/* Password */}
+              
               <div>
                 <label className="block text-gray-700 font-medium mb-2">
                   Password
@@ -271,7 +271,7 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              {/* Register Button */}
+              
               <button
                 type="submit"
                 disabled={loading}

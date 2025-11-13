@@ -47,7 +47,7 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
+     
       <section className="bg-gradient-to-r from-blue-600 to-blue-500 text-white text-center py-16 shadow-md">
         <h1 className="text-4xl font-bold mb-3 tracking-tight">Get In Touch</h1>
         <p className="text-lg text-blue-100 max-w-2xl mx-auto leading-relaxed">
@@ -56,7 +56,7 @@ export default function ContactPage() {
         </p>
       </section>
 
-      {/* Contact Cards Section */}
+      
       <section className="max-w-6xl mx-auto mt-16 px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {contactInfo.map((item, index) => (
@@ -76,13 +76,12 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Divider */}
       <div className="border-t border-gray-200 my-12 w-10/12 mx-auto"></div>
 
-      {/* Send Message & Location Section */}
+      
       <section className="max-w-6xl mx-auto mb-20 px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Left Side — Contact Form */}
+         
           <div>
             <h2 className="text-3xl font-bold text-gray-800 mb-2">
               Send Us a Message
@@ -92,7 +91,7 @@ export default function ContactPage() {
             </p>
 
             <form className="space-y-5">
-              {/* Row 1 */}
+              
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-gray-700 font-medium mb-2">
@@ -117,7 +116,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Row 2 */}
+             
               <div>
                 <label className="block text-gray-700 font-medium mb-2">
                   Email Address *
@@ -129,7 +128,7 @@ export default function ContactPage() {
                 />
               </div>
 
-              {/* Row 3 */}
+             
               <div>
                 <label className="block text-gray-700 font-medium mb-2">
                   Subject
@@ -141,7 +140,7 @@ export default function ContactPage() {
                 />
               </div>
 
-              {/* Row 4 */}
+              
               <div>
                 <label className="block text-gray-700 font-medium mb-2">
                   Message *
@@ -153,7 +152,7 @@ export default function ContactPage() {
                 ></textarea>
               </div>
 
-              {/* Submit Button */}
+              
               <button
                 type="submit"
                 className="bg-blue-600 text-white w-full sm:w-auto px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-all shadow-md"
@@ -163,7 +162,7 @@ export default function ContactPage() {
             </form>
           </div>
 
-          {/* Right Side — Location */}
+         
           <div>
             <h2 className="text-3xl font-bold text-gray-800 mb-2">
               Our Location
@@ -172,7 +171,7 @@ export default function ContactPage() {
               Visit us at our office in Mumbai's financial district.
             </p>
 
-            {/* Map / Placeholder Box */}
+            
             <div className="w-full h-80 bg-gray-200 rounded-2xl shadow-inner flex items-center justify-center text-gray-500 text-sm">
               📍 Map Integration Coming Soon
             </div>

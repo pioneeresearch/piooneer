@@ -2,7 +2,7 @@
 "use client";
 
 export default function Hero() {
-  // ---------- REUSABLE COMPONENTS ----------
+  
 
   // InfoCard Component
   function InfoCard({ number, text }) {
@@ -94,7 +94,7 @@ export default function Hero() {
   // ---------- MAIN RETURN ----------
   return (
     <>
-      {/* ========== HERO SECTION ========== */}
+     
       <section className="flex flex-col items-center justify-center min-h-screen text-center bg-white px-6 py-20">
         <p className="text-gray-700 text-lg font-medium bg-blue-50 px-6 py-2 rounded-full border border-blue-200 shadow-sm mb-6">
           Trusted Financial Partner Since 2009
@@ -131,7 +131,7 @@ export default function Hero() {
       </section>
 
 
-      {/* ========== MISSION SECTION ========== */}
+     
       <section className="flex flex-col md:flex-row items-center justify-center gap-14 bg-gray-50 py-20 px-8">
 
         <div className="relative md:w-1/2 w-full">
@@ -187,7 +187,7 @@ export default function Hero() {
       </section>
 
 
-      {/* ========== SERVICES SECTION ========== */}
+     
       <section className="text-center py-24 bg-white px-6">
         <SectionHeader
           label="Our Services"
@@ -240,7 +240,7 @@ export default function Hero() {
         </button>
       </section>
 
-      {/* ========== TESTIMONIALS SECTION ========== */}
+      
       <section className="bg-blue-50 py-20 text-center px-6">
         <SectionHeader
           label="Testimonials"
@@ -279,21 +279,21 @@ export default function Hero() {
   <div className="flex flex-wrap justify-center items-center gap-12 max-w-6xl mx-auto">
    
     <img
-      src="/partners/hdfc.png"
+      src="/partners/hdfc.svg"
       alt="HDFC Bank"
       className="h-14 opacity-80 hover:opacity-100 transition-transform duration-300 hover:scale-110"
     />
 
     
     <img
-      src="/partners/icici.png"
+      src="/partners/icici.svg"
       alt="ICICI Bank"
       className="h-14 opacity-80 hover:opacity-100 transition-transform duration-300 hover:scale-110"
     />
 
     
     <img
-      src="/partners/axis.png"
+      src="/partners/axis3.jpeg"
       alt="Axis Bank"
       className="h-14 opacity-80 hover:opacity-100 transition-transform duration-300 hover:scale-110"
     />
@@ -306,16 +306,12 @@ export default function Hero() {
     />
 
     
-    <img
-      src="/partners/maxlife.png"
-      alt="Max Life Insurance"
-      className="h-14 opacity-80 hover:opacity-100 transition-transform duration-300 hover:scale-110"
-    />
+    
   </div>
 </section>
 
 
-      {/* ---------- READY TO GROW SECTION ---------- */}
+      
       <section className="py-20 px-8 mx-8 bg-gradient-to-r from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-xl mt-20">
         <h2 className="text-4xl font-extrabold mb-4">
           Ready to <span className="text-yellow-300">Grow Your Wealth?</span>

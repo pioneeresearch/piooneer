@@ -86,7 +86,7 @@ export default function InsurancePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
+      
       <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white text-center py-16">
         <div className="flex justify-center mb-4">
           <Shield size={40} className="text-white" />
@@ -97,7 +97,7 @@ export default function InsurancePage() {
         </p>
       </div>
 
-      {/* Tabs Section */}
+     
       <div className="flex justify-center mt-8">
         <div className="bg-gray-100 rounded-xl p-1 flex space-x-2">
           <button
@@ -123,7 +123,7 @@ export default function InsurancePage() {
         </div>
       </div>
 
-      {/* Insurance Cards */}
+     
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mt-10 pb-20 px-6">
         {plans[activeTab].map((plan, index) => (
           <div
@@ -165,7 +165,7 @@ export default function InsurancePage() {
         ))}
       </div>
 
-      {/* Why Insurance Matters Section */}
+      
       <section className="py-16 bg-white text-center">
         <h2 className="text-3xl font-bold text-gray-800 mb-4">Why Insurance Matters</h2>
         <p className="text-gray-500 max-w-2xl mx-auto mb-10">

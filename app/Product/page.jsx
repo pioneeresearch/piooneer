@@ -2,13 +2,13 @@
 import { useState } from "react";
 
 export default function MutualFunds() {
-  // ---------- STATE ----------
+
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [fundHouseFilter, setFundHouseFilter] = useState("All");
   const [openFAQ, setOpenFAQ] = useState(null);
 
-  // ---------- SAMPLE DATA ----------
+ 
   const mutualFunds = [
     {
       id: 1,
@@ -55,10 +55,10 @@ export default function MutualFunds() {
   function FundCard({ name, house, category, returns, risk, color }) {
     return (
       <div className="relative bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 p-6 flex items-center justify-between overflow-hidden">
-        {/* Decorative Blue Bottom Glow */}
+        
         <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-600 to-indigo-500 rounded-b-2xl"></div>
 
-        {/* Left Side */}
+       
         <div className="flex items-center gap-4 z-10">
           <div
             className={`bg-${color}-100 text-${color}-600 w-12 h-12 flex items-center justify-center rounded-xl`}
@@ -71,7 +71,7 @@ export default function MutualFunds() {
           </div>
         </div>
 
-        {/* Right Side */}
+       
         <div className="flex items-center gap-10 text-sm z-10">
           <div>
             <p className="text-gray-500">Category</p>
@@ -128,7 +128,7 @@ export default function MutualFunds() {
   // ---------- MAIN RETURN ----------
   return (
     <>
-      {/* ---------- HEADER SECTION ---------- */}
+      
       <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg mb-16">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
           Mutual Funds
@@ -138,7 +138,7 @@ export default function MutualFunds() {
         </p>
       </section>
 
-      {/* ---------- SEARCH & FILTER BAR ---------- */}
+      
       <div className="max-w-5xl mx-auto mb-12 flex flex-col md:flex-row items-center justify-center gap-4 px-6">
         <input
           type="text"
@@ -171,7 +171,7 @@ export default function MutualFunds() {
         </select>
       </div>
 
-      {/* ---------- FUNDS LIST ---------- */}
+      
       <section className="max-w-6xl mx-auto px-6 pb-20 space-y-6">
         {filteredFunds.map((fund) => (
           <FundCard key={fund.id} {...fund} />
@@ -183,7 +183,7 @@ export default function MutualFunds() {
         )}
       </section>
 
-      {/* ---------- NEED HELP SECTION ---------- */}
+      
       <section className="max-w-5xl mx-auto text-center bg-blue-50 py-12 px-6 rounded-3xl shadow-inner mb-16">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">
           Need Help Choosing?
@@ -196,7 +196,7 @@ export default function MutualFunds() {
         </button>
       </section>
 
-      {/* ---------- UNDERSTANDING MUTUAL FUNDS SECTION ---------- */}
+      
       <section className="max-w-5xl mx-auto px-6 pb-20">
         <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-10">
           Understanding Mutual Funds

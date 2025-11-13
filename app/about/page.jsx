@@ -3,7 +3,7 @@ export default function About() {
   function ServiceCard({ icon, color, title, description }) {
     return (
       <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center relative overflow-hidden group">
-        {/* Decorative Gradient Border Glow */}
+       
         <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-indigo-100 opacity-0 group-hover:opacity-100 blur-2xl transition duration-500"></div>
 
         <div
@@ -52,7 +52,7 @@ export default function About() {
         <h3 className="text-xl font-semibold text-gray-800">{name}</h3>
         <p className="text-gray-500">{role}</p>
 
-        {/* Decorative Circle Glow */}
+     
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-blue-50 to-indigo-50 opacity-0 group-hover:opacity-100 transition duration-700 -z-10"></div>
       </div>
     );
@@ -61,7 +61,7 @@ export default function About() {
   // ---------- MAIN RETURN ----------
   return (
     <>
-      {/* ---------- HEADER SECTION ---------- */}
+      
       <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-md">
           About <span className="text-yellow-300">Pioneer Wealth</span> Solutions
@@ -71,26 +71,52 @@ export default function About() {
         </p>
       </section>
 
-      {/* ---------- WHO WE ARE SECTION ---------- */}
-      <section className="py-20 px-6 text-center md:text-left bg-white max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-          Who We Are
-        </h2>
-        <p className="text-gray-600 text-lg leading-relaxed mb-6">
-          Pioneer Wealth Solutions is a leading financial advisory and wealth management firm
-          dedicated to helping individuals and families achieve financial freedom. For over
-          15 years, we have been providing personalized financial strategies that empower our
-          clients to grow, protect,  and manage their wealth effectively.
-        </p>
-        <p className="text-gray-600 text-lg leading-relaxed">
-          Our team of expert financial planners and advisors brings deep industry knowledge,
-          innovative ideas, and a commitment to helping clients reach their financial goals.
-          We believe in transparency, long-term relationships, and strategies built around
-          your life’s ambitions.
-        </p>
-      </section>
+     
+      <section className="py-20 px-6 text-center md:text-left bg-white max-w-6xl mx-auto relative overflow-hidden rounded-3xl shadow-sm">
+  
+  <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-indigo-50 to-transparent opacity-80 blur-3xl -z-10"></div>
 
-      {/* ---------- MISSION & VISION SECTION ---------- */}
+  <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center relative">
+    Who We Are
+  </h2>
+
+  <div className="grid md:grid-cols-2 gap-8 items-center">
+    
+    <div className="flex justify-center">
+  <img
+    src="/neww.jpg"
+    alt="Team Collaboration"
+    className="rounded-3xl shadow-2xl w-full max-w-2xl md:max-w-2xl transform hover:scale-105 transition duration-500 object-cover"
+  />
+</div>
+
+
+    {/* Right Text Section */}
+    <div>
+      <p className="text-gray-700 text-lg leading-relaxed mb-6">
+        <span className="font-semibold text-blue-600">Pioneer Wealth Solutions</span> isn’t just
+        another financial firm — we’re a passionate team on a mission to simplify finance and help
+        dreams come true. Since our inception in 2009, we’ve guided thousands of individuals and
+        families toward a life of confidence, clarity, and financial independence.
+      </p>
+
+      <p className="text-gray-700 text-lg leading-relaxed mb-6">
+        From smart investments to secure insurance and tax strategies, we tailor each plan with
+        precision — blending innovation, ethics, and a touch of human empathy. Our goal is simple:
+        to ensure your money works harder for you, while you focus on what truly matters —{" "}
+        <span className="italic text-indigo-600">living your best life.</span>
+      </p>
+
+      <p className="text-gray-700 text-lg leading-relaxed">
+        With over <span className="font-semibold text-blue-600">15 years</span> of excellence, we
+        continue to evolve, inspire, and empower our clients to build wealth that lasts for
+        generations.
+      </p>
+    </div>
+  </div>
+</section>
+
+      
       <section className="text-center py-20 bg-gray-50 px-6">
         
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-10">
@@ -109,7 +135,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ---------- CORE VALUES SECTION ---------- */}
+      
       <section className="text-center py-20 bg-white px-6">
         <SectionHeader
          
@@ -145,7 +171,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ---------- MEET OUR TEAM SECTION ---------- */}
+      
       <section className="text-center py-20 bg-gray-50 px-6">
         <SectionHeader
           
@@ -154,10 +180,10 @@ export default function About() {
           color="blue"
         />
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-          <TeamCard image="/team1.png" name="Rajesh Mehta" role="Founder & CEO" />
-          <TeamCard image="/team2.png" name="Anjali Desai" role="Head of Investments" />
-          <TeamCard image="/team3.png" name="Vikram Singh" role="Insurance Specialist" />
-          <TeamCard image="/team4.png" name="Sneha Reddy" role="Tax Consultant" />
+          <TeamCard image="/anu.jpg" name="Rajesh Mehta" role="Founder & CEO" />
+          <TeamCard image="/item33.jpg" name="Anjali Desai" role="Head of Investments" />
+          <TeamCard image="/item45.jpg" name="Vikram Singh" role="Insurance Specialist" />
+          <TeamCard image="/item44.jpg" name="Sneha Reddy" role="Tax Consultant" />
         </div>
       </section>
     </>
