@@ -87,9 +87,9 @@ export default function InsurancePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       
-      <div className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-19 from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg pt-5 pb-5">
+      <div className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-5 from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg pt-5 pb-5">
         
-        <h1 className="text-4xl font-bold mb-3">Insurance<span className="text-yellow-300"> Plans</span></h1>
+        <h1 className="text-4xl md:text-5xl font-extrabold mb-4">Insurance<span className="text-yellow-300"> Plans</span></h1>
         <p className="text-blue-100 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
           Protect what matters most with comprehensive insurance coverage for you and your family.
         </p>

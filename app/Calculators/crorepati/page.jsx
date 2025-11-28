@@ -29,12 +29,9 @@ ChartJS.register(
 );
 
 
-const formatNum = (n) => {
-    if (!isFinite(n)) return "—";
-    if (n >= 1e7) return `₹ ${(n / 1e7).toFixed(2)} Cr`;
-    if (n >= 1e5) return `₹ ${(n / 1e5).toFixed(2)} L`;
-    if (n >= 1e3) return `₹ ${(n / 1e3).toFixed(2)} K`;
-    return `₹ ${n.toLocaleString()}`;
+const formatNum = (num) => {
+    if (!num || isNaN(num)) return "₹ 0";
+    return "₹ " + num.toLocaleString("en-IN");
 };
 
 const SliderMarks = ({ marks = [] }) => (
@@ -48,16 +45,25 @@ const SliderMarks = ({ marks = [] }) => (
 
 export default function BecomeCrorepatiPage() {
 
-    const [targetCrores, setTargetCrores] = useState(5_00_00_000);
+    const [targetCrores, setTargetCrores] = useState();
     const [ageNow, setAgeNow] = useState(30);
     const [targetAge, setTargetAge] = useState(60);
     const [inflation, setInflation] = useState(5);
     const [expectedReturn, setExpectedReturn] = useState(12);
-    const [currentSavings, setCurrentSavings] = useState(25_00_000);
+    const [currentSavings, setCurrentSavings] = useState();
 
 
     const pieRef = useRef(null);
     const barRef = useRef(null);
+    const [showForm, setShowForm] = useState(false);
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        mobile: "",
+        goal: "",
+        calculatorType: " Crorepati Calculator",
+    });
+
 
 
     const yearsToSave = Math.max(0, targetAge - ageNow);
@@ -116,7 +122,36 @@ export default function BecomeCrorepatiPage() {
 
     const getCanvas = (ref) => ref.current?.canvas || ref.current?.ctx?.canvas || ref.current?.chart?.canvas || null;
 
+    const handleSubmitForm = async () => {
+        const { name, email, mobile, goal, calculatorType } = formData;
 
+
+        if (!name.trim() || !email.trim() || !mobile.trim() || !goal.trim()) {
+            alert("Please fill the form before downloading PDF.");
+            return;
+        }
+
+
+        const res = await fetch("/api/sip-form", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name,
+                email,
+                mobile,
+                goal,
+                calculatorType,
+            }),
+        });
+
+        if (res.ok) {
+            setShowForm(false);
+            downloadPDF();
+            alert("Your PDF has been successfully downloaded! 🎉");
+        } else {
+            alert("Something went wrong! Please try again.");
+        }
+    };
     const downloadPDF = () => {
         const pieImg = getCanvas(pieRef)?.toDataURL("image/png");
         const barImg = getCanvas(barRef)?.toDataURL("image/png");
@@ -229,28 +264,28 @@ export default function BecomeCrorepatiPage() {
     return (
         <div className="min-h-screen bg-gray-50 pb-16">
 
-           <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-19 from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg pt-5 pb-5">
-        <div className="max-w-6xl mx-auto text-center px-4">
+            <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-5 from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg pt-5 pb-5">
+                <div className="max-w-6xl mx-auto text-center px-4">
 
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-md">
-            Become A Crorepati<span className="text-yellow-300"> Calculator</span>
-          </h1>
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-md">
+                        Become A Crorepati<span className="text-yellow-300"> Calculator</span>
+                    </h1>
 
-          <div className="text-blue-100 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-            <Link href="/">Home</Link>
+                    <div className="text-blue-100 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+                        <Link href="/">Home</Link>
 
-            <span className="text-white-400">/</span>
-            <span>Tools & Calculators</span>
-            <span className="text-white-400">/</span>
-            <span >Become A Crorepati Calculators </span>
-          </div>
+                        <span className="text-white-400">/</span>
+                        <span>Tools & Calculators</span>
+                        <span className="text-white-400">/</span>
+                        <span >Become A Crorepati Calculators </span>
+                    </div>
 
-          <div className="flex justify-center">
-            <div className="w-20 h-[3px] bg-black-900 rounded-full"></div>
-          </div>
+                    <div className="flex justify-center">
+                        <div className="w-20 h-[3px] bg-black-900 rounded-full"></div>
+                    </div>
 
-        </div>
-      </section> 
+                </div>
+            </section>
 
 
             <main className="max-w-7xl mx-auto px-6 pt-10">
@@ -258,26 +293,34 @@ export default function BecomeCrorepatiPage() {
 
                     <div className="lg:col-span-2 space-y-6">
                         <div className="bg-white p-5 rounded-xl shadow-md border border-gray-100">
-                            <label className="block text-sm text-gray-700 mb-2 font-medium">
-                                How many Crores (at current value) you would need to consider yourself wealthy (₹)
-                            </label>
-                            <input
-                                type="number"
-                                className="w-full border rounded p-3 mb-3"
-                                value={targetCrores}
-                                onChange={(e) => setTargetCrores(Number(e.target.value || 0))}
-                            />
-                            <input
-                                type="range"
-                                min={0}
-                                max={1_00_00_00_000}
-                                step={1_00_000}
-                                value={targetCrores}
-                                onChange={(e) => setTargetCrores(Number(e.target.value))}
-                                className="w-full"
-                            />
-                            <SliderMarks marks={["0 Cr", "25 Cr", "50 Cr", "75 Cr", "100 Cr"]} />
+                            
+
+                                <label className="block text-sm text-gray-700 mb-2 font-medium">
+                                    How many Crores (at current value) you would need to consider yourself wealthy (₹)
+                                </label>
+
+                                <input
+                                    type="text"
+                                    className="
+        w-full border rounded-xl p-4 pr-12 text-gray-800 text-lg font-semibold
+        shadow-sm outline-none transition-all duration-300
+        group-hover:shadow-lg
+      "
+                                    value={targetCrores ? new Intl.NumberFormat("en-IN").format(targetCrores) : ""}
+                                    onChange={(e) => {
+                                        const raw = e.target.value.replace(/,/g, "").replace(/\D/g, "");
+                                        setTargetCrores(Number(raw || 0));
+                                    }}
+                                    placeholder="e.g. 1,00,00,000 (1 Crore)"
+                                />
+
+                                
+
+                           
+
+
                         </div>
+
 
                         <div className="bg-white p-5 rounded-xl shadow-md border border-gray-100">
                             <label className="block text-sm text-gray-700 mb-2 font-medium">Your current age (years)</label>
@@ -360,24 +403,25 @@ export default function BecomeCrorepatiPage() {
                         </div>
 
                         <div className="bg-white p-5 rounded-xl shadow-md border border-gray-100">
-                            <label className="block text-sm text-gray-700 mb-2 font-medium">How much savings you have now (₹)</label>
+                            <label className="block text-sm text-gray-700 mb-2 font-medium">
+                                How much savings you have now (₹)
+                            </label>
+
                             <input
-                                type="number"
-                                className="w-full border rounded p-3 mb-3"
-                                value={currentSavings}
-                                onChange={(e) => setCurrentSavings(Number(e.target.value || 0))}
+                                type="text"
+                                className="w-full border rounded-xl p-4 pr-16 text-gray-800 text-lg font-semibold shadow-sm   outline-none transition-all duration-300 group-hover:shadow-lg"
+                                value={currentSavings ? new Intl.NumberFormat("en-IN").format(currentSavings) : ""}
+                                onChange={(e) => {
+                                    const raw = e.target.value.replace(/,/g, "").replace(/\D/g, "");
+                                    setCurrentSavings(Number(raw || 0));
+                                }}
+                                placeholder="e.g. 25,00,000"
                             />
-                            <input
-                                type="range"
-                                min={0}
-                                max={1_00_00_00_000}
-                                step={1_00_000}
-                                value={currentSavings}
-                                onChange={(e) => setCurrentSavings(Number(e.target.value))}
-                                className="w-full"
-                            />
-                            <SliderMarks marks={["0 Cr", "25 Cr", "50 Cr", "75 Cr", "100 Cr"]} />
+
+                            
+
                         </div>
+
                     </div>
 
 
@@ -386,8 +430,8 @@ export default function BecomeCrorepatiPage() {
                         <div className="bg-white p-5 rounded-xl shadow-md border border-gray-100">
                             <div className="flex justify-end">
                                 <button
-                                    onClick={downloadPDF}
-                                    className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium shadow"
+                                    onClick={() => setShowForm(true)}
+                                    className="bg-blue-600 text-white px-4 py-1.5 rounded-md text-sm font-medium shadow-md hover:bg-blue-700"
                                 >
                                     Download
                                 </button>
@@ -496,6 +540,50 @@ export default function BecomeCrorepatiPage() {
                         </div>
                     </div>
                 </section>
+                {showForm && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-black/40 bg-opacity-50 z-50 "
+                        onClick={() => setShowForm(false)}>
+                        <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md"
+                            onClick={(e) => e.stopPropagation()} >
+
+                            <h2 className="text-lg font-bold mb-4 text-center">Fill Your Details</h2>
+
+                            <input type="text" placeholder="Your Name"
+                                className="border p-2 rounded w-full mb-3"
+                                value={formData.name}
+                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            />
+
+                            <input type="email" placeholder="Email Address"
+                                className="border p-2 rounded w-full mb-3"
+                                value={formData.email}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            />
+
+                            <input type="number" placeholder="Mobile Number"
+                                className="border p-2 rounded w-full mb-3"
+                                value={formData.mobile}
+                                onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                            />
+
+                            <input type="text" placeholder="Your Goal (Ex: Retirement, Child Education)"
+                                className="border p-2 rounded w-full mb-3"
+                                value={formData.goal}
+                                onChange={(e) => setFormData({ ...formData, goal: e.target.value })}
+                            />
+
+                            <button
+                                onClick={handleSubmitForm}
+                                className="bg-blue-600 text-white w-full p-2 rounded-md"
+                            >
+                                Submit & Download PDF
+                            </button>
+
+                        </div>
+                    </div>
+                )}
+
+
             </main>
         </div>
     );

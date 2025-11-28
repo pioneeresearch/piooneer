@@ -62,7 +62,7 @@ export default function About() {
   return (
     <>
 
-      <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-19 from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg pb-5 pt-5">
+      <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-5 from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg pb-5 pt-5">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-md">
           About <span className="text-yellow-300">Pioneer Wealth</span> Solutions
         </h1>
@@ -72,57 +72,53 @@ export default function About() {
       </section>
 
 
-      <section className="py-20 px-6 text-center md:text-left bg-gray max-w-6xl mx-auto relative overflow-hidden rounded-3xl shadow-xl mt-10 border-gray-100  transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl 
-">
+     <section className="py-12 px-6 bg-gray max-w-6xl mx-auto relative overflow-hidden rounded-3xl shadow-xl mt-10 border-gray-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
 
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-indigo-50 to-transparent opacity-80 blur-3xl -z-10"></div>
+  <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-indigo-50 to-transparent opacity-80 blur-3xl -z-10"></div>
 
-        <h2
-          className="text-3xl font-bold text-gray-800 mb-6 text-center 
-             relative inline-block px-3 py-1 
-             bg-gray-100 rounded-md
-             transition-all duration-300 hover:-translate-y-1 mx-auto
-        "
-        >
-          Who We Are
-        </h2>
+  {/* Heading Center Fix */}
+  <div className="flex justify-center">
+    <h2
+      className="text-3xl font-bold text-blue-600 
+                 relative inline-block px-10 py-1 pb-3 
+                  rounded-md
+                 transition-all duration-300 hover:-translate-y-1">
+      Who We Are
+    </h2>
+  </div>
 
+  <div className="grid md:grid-cols-2 gap-8 items-center mt-6">
 
-        <div className="grid md:grid-cols-2 gap-8 items-center">
+    <div className="flex justify-center">
+      <img
+        src="/neww.jpg"
+        alt="Team Collaboration"
+        className="rounded-3xl shadow-2xl w-full max-w-2xl transform hover:scale-105 transition duration-500 object-cover"
+      />
+    </div>
 
-          <div className="flex justify-center">
-            <img
-              src="/neww.jpg"
-              alt="Team Collaboration"
-              className="rounded-3xl shadow-2xl w-full max-w-2xl md:max-w-2xl transform hover:scale-105 transition duration-500 object-cover"
-            />
-          </div>
+    <div>
+      <p className="text-gray-700 text-lg leading-relaxed mb-6">
+        <span className="font-semibold text-blue-600">Pioneer Wealth Solutions</span> isn’t just
+        another financial firm — we’re a passionate team on a mission to simplify finance and help
+        dreams come true. Since our inception in 2009, we’ve guided thousands toward financial freedom.
+      </p>
 
+      <p className="text-gray-700 text-lg leading-relaxed mb-6">
+        From smart investments to insurance and tax strategies, we tailor each plan with precision —
+        blending innovation, ethics, and empathy. Our goal is simple: ensure your money works harder
+        for you while you focus on <span className="italic text-indigo-600">living your best life.</span>
+      </p>
 
-          {/* Right Text Section */}
-          <div>
-            <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              <span className="font-semibold text-blue-600">Pioneer Wealth Solutions</span> isn’t just
-              another financial firm — we’re a passionate team on a mission to simplify finance and help
-              dreams come true. Since our inception in 2009, we’ve guided thousands of individuals and
-              families toward a life of confidence, clarity, and financial independence.
-            </p>
+      <p className="text-gray-700 text-lg leading-relaxed">
+        With over <span className="font-semibold text-blue-600">15 years</span> of excellence, we
+        empower our clients to build wealth that lasts for generations.
+      </p>
+    </div>
 
-            <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              From smart investments to secure insurance and tax strategies, we tailor each plan with
-              precision — blending innovation, ethics, and a touch of human empathy. Our goal is simple:
-              to ensure your money works harder for you, while you focus on what truly matters —{" "}
-              <span className="italic text-indigo-600">living your best life.</span>
-            </p>
+  </div>
+</section>
 
-            <p className="text-gray-700 text-lg leading-relaxed">
-              With over <span className="font-semibold text-blue-600">15 years</span> of excellence, we
-              continue to evolve, inspire, and empower our clients to build wealth that lasts for
-              generations.
-            </p>
-          </div>
-        </div>
-      </section>
 
 
       <section className="text-center py-20 bg-gray-50 px-6">

@@ -30,23 +30,28 @@ ChartJS.register(
 
 
 const formatNum = (num) => {
-  if (!isFinite(num)) return "₹ 0";
-  if (num >= 1e7) return `₹ ${(num / 1e7).toFixed(2)} Cr`;
-  if (num >= 1e5) return `₹ ${(num / 1e5).toFixed(2)} L`;
-  if (num >= 1e3) return `₹ ${(num / 1e3).toFixed(2)} K`;
-  return `₹ ${Number(num).toLocaleString("en-IN")}`;
+  if (!num || isNaN(num)) return "₹ 0";
+  return "₹ " + num.toLocaleString("en-IN");
 };
 
 
 export default function StepUpSIPCalculatorPage() {
 
-  const [monthly, setMonthly] = useState(25000);
+  const [monthly, setMonthly] = useState();
   const [years, setYears] = useState(20);
   const [annualReturn, setAnnualReturn] = useState(12);
   const [stepUp, setStepUp] = useState(10);
 
   const pieRef = useRef(null);
   const barRef = useRef(null);
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    goal: "",
+    calculatorType: "SIP Step up Calculator",
+  });
 
 
   const simulation = useMemo(() => {
@@ -124,7 +129,36 @@ export default function StepUpSIPCalculatorPage() {
       },
     ],
   };
+  const handleSubmitForm = async () => {
+    const { name, email, mobile, goal, calculatorType } = formData;
 
+
+    if (!name.trim() || !email.trim() || !mobile.trim() || !goal.trim()) {
+      alert("Please fill the form before downloading PDF.");
+      return;
+    }
+
+
+    const res = await fetch("/api/sip-form", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        email,
+        mobile,
+        goal,
+        calculatorType,
+      }),
+    });
+
+    if (res.ok) {
+      setShowForm(false);
+      downloadPDF();
+      alert("Your PDF has been successfully downloaded! 🎉");
+    } else {
+      alert("Something went wrong! Please try again.");
+    }
+  };
 
   const getCanvas = (ref) =>
     ref.current?.canvas || ref.current?.ctx?.canvas || ref.current?.chart?.canvas || null;
@@ -246,7 +280,7 @@ export default function StepUpSIPCalculatorPage() {
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
 
-      <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-19 from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg pt-5 pb-5">
+      <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-5 from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg pt-5 pb-5">
         <div className="max-w-6xl mx-auto text-center px-4">
           <h1 className="text-4xl font-semibold text-white-900 mb-2">
             Mutual Fund SIP <span className="text-yellow-300">Calculator </span> Step Up
@@ -267,9 +301,37 @@ export default function StepUpSIPCalculatorPage() {
 
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-              <label className="block text-gray-700 mb-2 font-medium">How much you can invest through monthly SIP? (Rs)</label>
-              <input type="number" className="w-full border rounded p-3 mb-3" value={monthly} onChange={(e) => setMonthly(Number(e.target.value || 0))} />
-              <input type="range" min={0} max={10000000} step={100} value={monthly} onChange={(e) => setMonthly(Number(e.target.value))} className="w-full" />
+
+              <label className="block text-[15px] text-gray-800 mb-3 font-semibold">
+                How much you can invest through monthly SIP? (Rs)
+              </label>
+
+
+              <input
+                type="text"
+                className="
+        w-full border rounded-xl p-4 pr-12
+        text-gray-800 text-lg font-semibold
+        shadow-sm outline-none transition-all duration-300
+        group-hover:shadow-lg
+      "
+                value={
+                  monthly
+                    ? Number(monthly).toLocaleString("en-IN")
+                    : ""
+                }
+                onChange={(e) => {
+                  const raw = e.target.value.replace(/,/g, "").replace(/\D/g, "");
+                  setMonthly(Number(raw || 0));
+                }}
+                placeholder="Enter Monthly SIP Amount"
+              />
+<span className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-600 font-bold text-xl opacity-0 group-hover:opacity-100 transition-all duration-300">
+                ₹
+              </span>
+
+
+
             </div>
 
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
@@ -296,7 +358,12 @@ export default function StepUpSIPCalculatorPage() {
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
               <div className="flex justify-between items-center mb-2">
                 <h4 className="font-medium text-gray-700">Break-up of Total Payment</h4>
-                <button onClick={downloadPDF} className="bg-blue-600 text-white px-4 py-1.5 rounded-md text-sm">Download</button>
+                <button
+                  onClick={() => setShowForm(true)}
+                  className="bg-blue-600 text-white px-4 py-1.5 rounded-md text-sm font-medium shadow-md hover:bg-blue-700"
+                >
+                  Download
+                </button>
               </div>
               <div className="mt-4">
                 <Pie ref={pieRef} data={pieData} />
@@ -431,6 +498,49 @@ export default function StepUpSIPCalculatorPage() {
 
           </div>
         </section>
+        {showForm && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/40 bg-opacity-50 z-50 "
+            onClick={() => setShowForm(false)}>
+            <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md"
+              onClick={(e) => e.stopPropagation()} >
+
+              <h2 className="text-lg font-bold mb-4 text-center">Fill Your Details</h2>
+
+              <input type="text" placeholder="Your Name"
+                className="border p-2 rounded w-full mb-3"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              />
+
+              <input type="email" placeholder="Email Address"
+                className="border p-2 rounded w-full mb-3"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+
+              <input type="number" placeholder="Mobile Number"
+                className="border p-2 rounded w-full mb-3"
+                value={formData.mobile}
+                onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+              />
+
+              <input type="text" placeholder="Your Goal (Ex: Retirement, Child Education)"
+                className="border p-2 rounded w-full mb-3"
+                value={formData.goal}
+                onChange={(e) => setFormData({ ...formData, goal: e.target.value })}
+              />
+
+              <button
+                onClick={handleSubmitForm}
+                className="bg-blue-600 text-white w-full p-2 rounded-md"
+              >
+                Submit & Download PDF
+              </button>
+
+            </div>
+          </div>
+        )}
+
 
 
 

@@ -34,7 +34,7 @@ ChartJS.register(
 
 export default function HomeLoanEMIPage() {
 
-    const [loan, setLoan] = useState(2500000);
+    const [loan, setLoan] = useState();
     const [rate, setRate] = useState(12.5);
     const [tenure, setTenure] = useState(20);
     const [tenureMode, setTenureMode] = useState("years");
@@ -42,7 +42,14 @@ export default function HomeLoanEMIPage() {
 
     const pieContainerRef = useRef(null);
     const barContainerRef = useRef(null);
-
+    const [showForm, setShowForm] = useState(false);
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        mobile: "",
+        goal: "",
+        calculatorType: "EMI Calculator",
+    });
 
     const months = useMemo(
         () =>
@@ -112,7 +119,36 @@ export default function HomeLoanEMIPage() {
             }));
     }, [loan, monthlyRate, EMI, months]);
 
+    const handleSubmitForm = async () => {
+        const { name, email, mobile, goal, calculatorType } = formData;
 
+
+        if (!name.trim() || !email.trim() || !mobile.trim() || !goal.trim()) {
+            alert("Please fill the form before downloading PDF.");
+            return;
+        }
+
+
+        const res = await fetch("/api/sip-form", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name,
+                email,
+                mobile,
+                goal,
+                calculatorType,
+            }),
+        });
+
+        if (res.ok) {
+            setShowForm(false);
+            downloadPDF();
+            alert("Your PDF has been successfully downloaded! 🎉");
+        } else {
+            alert("Something went wrong! Please try again.");
+        }
+    };
     const yearlyChartData = useMemo(() => {
         return {
             labels: schedule.map((s) => s.year.toString()),
@@ -127,7 +163,7 @@ export default function HomeLoanEMIPage() {
                     label: "Interest",
                     type: "bar",
                     data: schedule.map((s) => Math.round(s.totals.interest)),
-                    backgroundColor:  "#3B82F6",
+                    backgroundColor: "#3B82F6",
                 },
                 {
                     label: "Balance",
@@ -250,7 +286,7 @@ export default function HomeLoanEMIPage() {
     return (
         <div className="w-full">
 
-            <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-19 from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg pt-5 pb-5">
+            <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-5 from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg pt-5 pb-5">
                 <div className="max-w-6xl mx-auto text-center px-4">
                     <h1 className="text-4xl font-semibold text-white-900 mb-2">
                         EMI Home Loan <span className="text-yellow-300">Calculator </span>
@@ -270,8 +306,11 @@ export default function HomeLoanEMIPage() {
                 <div className="bg-white rounded-2xl shadow-xl p-6 max-w-7xl w-full">
 
                     <div className="flex justify-end mb-4">
-                        <button onClick={downloadPDF} className="bg-blue-900 text-white px-6 py-2 rounded-md hover:bg-blue-800">
-                            Download PDF
+                        <button
+                            onClick={() => setShowForm(true)}
+                            className="bg-blue-600 text-white px-4 py-1.5 rounded-md text-sm font-medium shadow-md hover:bg-blue-700"
+                        >
+                            Download
                         </button>
                     </div>
 
@@ -281,24 +320,33 @@ export default function HomeLoanEMIPage() {
                         <div className="lg:col-span-2 space-y-6">
 
                             <div className="bg-white p-5 rounded-xl shadow-md border border-gray-100">
-                                <label className="block text-sm text-gray-700 mb-2">Home Loan Amount (Rs)</label>
-                                <input readOnly value={loan.toLocaleString("en-IN")} className="w-full bg-white p-3 rounded-md border" />
+
+                                <label className="block text-sm text-gray-700 mb-2 font-medium">
+                                    Home Loan Amount (₹)
+                                </label>
+
+
                                 <input
-                                    type="range"
-                                    min={0}
-                                    max={100000000}
-                                    step={50000}
-                                    value={loan}
-                                    onChange={(e) => setLoan(Number(e.target.value))}
-                                    className="mt-4 w-full"
+                                    type="text"
+                                    className="
+        w-full border rounded-xl p-4 pr-12 text-gray-800 text-lg font-semibold
+        shadow-sm outline-none transition-all duration-300
+        group-hover:shadow-lg
+      "
+                                    value={loan ? loan.toLocaleString("en-IN") : ""}
+                                    onChange={(e) => {
+                                        const raw = e.target.value.replace(/,/g, "").replace(/\D/g, "");
+                                        setLoan(Number(raw || 0));
+                                    }}
+                                    placeholder="Enter Loan Amount"
                                 />
-                                <div className="flex justify-between text-xs text-gray-500 mt-2">
-                                    <span>0 Crore</span>
-                                    <span>25 Crores</span>
-                                    <span>50 Crores</span>
-                                    <span>75 Crores</span>
-                                    <span>100 Crores</span>
-                                </div>
+                                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-600 font-bold text-xl opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                    ₹
+                                </span>
+
+
+
+
                             </div>
 
 
@@ -476,6 +524,48 @@ export default function HomeLoanEMIPage() {
 
                 </div>
             </section>
+            {showForm && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black/40 bg-opacity-50 z-50 "
+                    onClick={() => setShowForm(false)}>
+                    <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md"
+                        onClick={(e) => e.stopPropagation()}>
+
+                        <h2 className="text-lg font-bold mb-4 text-center">Fill Your Details</h2>
+
+                        <input type="text" placeholder="Your Name"
+                            className="border p-2 rounded w-full mb-3"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        />
+
+                        <input type="email" placeholder="Email Address"
+                            className="border p-2 rounded w-full mb-3"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        />
+
+                        <input type="number" placeholder="Mobile Number"
+                            className="border p-2 rounded w-full mb-3"
+                            value={formData.mobile}
+                            onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                        />
+
+                        <input type="text" placeholder="Your Goal (Ex: Retirement, Child Education)"
+                            className="border p-2 rounded w-full mb-3"
+                            value={formData.goal}
+                            onChange={(e) => setFormData({ ...formData, goal: e.target.value })}
+                        />
+
+                        <button
+                            onClick={handleSubmitForm}
+                            className="bg-blue-600 text-white w-full p-2 rounded-md"
+                        >
+                            Submit & Download PDF
+                        </button>
+
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

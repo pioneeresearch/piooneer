@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import "@/lib/chartjs-fix";
 import React, { useMemo, useRef, useState } from "react";
+
 import {
   Chart as ChartJS,
   ArcElement,
@@ -30,11 +31,8 @@ ChartJS.register(
 
 
 const formatNum = (num) => {
-  if (!isFinite(num)) return "∞";
-  if (num >= 1e7) return `₹ ${(num / 1e7).toFixed(2)} Cr`;
-  if (num >= 1e5) return `₹ ${(num / 1e5).toFixed(2)} L`;
-  if (num >= 1e3) return `₹ ${(num / 1e3).toFixed(2)} K`;
-  return `₹ ${num.toFixed(2)}`;
+  if (!num || isNaN(num)) return "₹ 0";
+  return "₹ " + num.toLocaleString("en-IN");
 };
 
 const SliderMarks = ({ marks }) => (
@@ -47,7 +45,7 @@ const SliderMarks = ({ marks }) => (
 
 
 export default function SIPReturnPage() {
-  const [monthly, setMonthly] = useState(25000);
+  const [monthly, setMonthly] = useState();
   const [months, setMonths] = useState(120);
   const [annualReturn, setAnnualReturn] = useState(12);
 
@@ -55,10 +53,26 @@ export default function SIPReturnPage() {
   const barRef = useRef(null);
 
 
-  const setMonthlySafe = (v) => setMonthly(Math.max(100, Math.min(v, 1000000000)));
+  const setMonthlySafe = (v) => setMonthly(Math.max(0, Math.min(v, 1000000000)));
   const setMonthsSafe = (v) => setMonths(Math.max(1, Math.min(v, 600)));
   const setReturnSafe = (v) => setAnnualReturn(Math.max(0, Math.min(v, 30)));
+  const sipValues = [0, 1000, 10000, 100000, 1000000, 10000000, 100000000];
 
+  <input
+    type="number"
+    className="w-full border rounded-lg p-3 text-gray-700 mb-4"
+    value={monthly}
+    onChange={(e) => setMonthlySafe(Number(e.target.value))}
+  />
+
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    goal: "",
+    calculatorType: "SIP Return Calculator",
+  });
 
   const r = annualReturn / 100 / 12;
   const futureValue = useMemo(() => {
@@ -101,6 +115,37 @@ export default function SIPReturnPage() {
         backgroundColor: "#3B82F6",
       },
     ],
+  };
+
+  const handleSubmitForm = async () => {
+    const { name, email, mobile, goal, calculatorType } = formData;
+
+
+    if (!name.trim() || !email.trim() || !mobile.trim() || !goal.trim()) {
+      alert("Please fill the form before downloading PDF.");
+      return;
+    }
+
+
+    const res = await fetch("/api/sip-form", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        email,
+        mobile,
+        goal,
+        calculatorType,
+      }),
+    });
+
+    if (res.ok) {
+      setShowForm(false);
+      downloadPDF();
+      alert("Your PDF has been successfully downloaded! 🎉");
+    } else {
+      alert("Something went wrong! Please try again.");
+    }
   };
 
 
@@ -195,7 +240,7 @@ export default function SIPReturnPage() {
 
 
 
-  const moneyMarks = ["0", "25 cr", "50 cr", "75 cr", "100 cr"];
+  const moneyMarks = ["0", "1K", "10K", "1L", "10L", "50L", "1Cr", "10Cr", "100Cr"];
   const monthsMarks = ["0", "75", "150", "225", "300", "375", "450"];
   const returnMarks = ["0%", "7%", "15%", "22%", "30%"];
 
@@ -204,7 +249,7 @@ export default function SIPReturnPage() {
     <div className="min-h-screen bg-gray-50 pb-20">
 
 
-      <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-19 from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg pt-5 pb-5">
+      <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-5 from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg pt-5 pb-5">
         <div className="max-w-6xl mx-auto text-center px-4">
 
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-md">
@@ -243,23 +288,25 @@ export default function SIPReturnPage() {
               </label>
 
               <input
-                type="number"
-                className="w-full border rounded-lg p-3 text-gray-700 focus:ring-green-600 focus:outline-none mb-4"
-                value={monthly}
-                onChange={(e) => setMonthlySafe(Number(e.target.value || 0))}
+                type="text"
+                className="w-full border rounded-xl p-4 pr-16 text-gray-800 text-lg font-semibold shadow-sm   outline-none transition-all duration-300 group-hover:shadow-lg"
+                value={
+                  monthly
+                    ? "₹ " + Number(monthly).toLocaleString("en-IN")
+                    : ""
+                }
+                onChange={(e) => {
+                  const raw = e.target.value.replace(/\D/g, "");
+                  setMonthlySafe(Number(raw));
+                }}
+                placeholder=" Enter Monthly SIP Amount"
               />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-600 font-bold text-xl opacity-0 group-hover:opacity-100 transition-all duration-300">
+                ₹
+              </span>
 
-              <input
-                type="range"
-                min={0}
-                max={1000000000}
-                step={100}
-                value={monthly}
-                onChange={(e) => setMonthlySafe(Number(e.target.value))}
-                className="w-full accent-blue-600"
-              />
 
-              <SliderMarks marks={["0", "25 cr", "50 cr", "75 cr", "100 cr"]} />
+
             </div>
 
 
@@ -326,7 +373,7 @@ export default function SIPReturnPage() {
                 <h4 className="font-semibold text-gray-800 text-lg">Breakdown</h4>
 
                 <button
-                  onClick={downloadPDF}
+                  onClick={() => setShowForm(true)}
                   className="bg-blue-600 text-white px-4 py-1.5 rounded-md text-sm font-medium shadow-md hover:bg-blue-700"
                 >
                   Download
@@ -431,6 +478,52 @@ export default function SIPReturnPage() {
           </p>
 
         </section>
+        {showForm && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/40 bg-opacity-50 z-50 "
+            onClick={() => setShowForm(false)}>
+            <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md"
+              onClick={(e) => e.stopPropagation()} >
+
+              <h2 className="text-lg font-bold mb-4 text-center">Fill Your Details</h2>
+
+              <input type="text" placeholder="Your Name"
+                className="border p-2 rounded w-full mb-3"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              />
+
+              <input type="email" placeholder="Email Address"
+                className="border p-2 rounded w-full mb-3"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+
+              <input type="number" placeholder="Mobile Number"
+                className="border p-2 rounded w-full mb-3"
+                value={formData.mobile}
+                onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+              />
+
+              <input type="text" placeholder="Your Goal (Ex: Retirement, Child Education)"
+                className="border p-2 rounded w-full mb-3"
+                value={formData.goal}
+                onChange={(e) => setFormData({ ...formData, goal: e.target.value })}
+              />
+
+              <button
+                onClick={handleSubmitForm}
+                className="bg-blue-600 text-white w-full p-2 rounded-md"
+              >
+                Submit & Download PDF
+              </button>
+
+            </div>
+          </div>
+        )}
+
+
+
+
 
       </main>
     </div>

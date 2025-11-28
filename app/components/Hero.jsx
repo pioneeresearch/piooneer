@@ -134,7 +134,7 @@ export default function Hero() {
   return (
     <>
 
-      <section className="relative min-h-[90vh] flex items-center px-10 py-20 overflow-hidden rounded-3xl mt-2   transition duration-300 hover:scale-103 object-cover border border-gray-100">
+      <section className="relative min-h-[90vh] flex items-center px-10 py-20 overflow-hidden rounded-3xl    transition duration-300 hover:scale-103 object-cover border border-gray-100">
 
         {/* Background Images */}
         {slideData.map((item, i) => (
@@ -146,15 +146,15 @@ export default function Hero() {
           />
         ))}
 
-        {/* Overlay */}
+        
         <div className="absolute inset-0 bg-black/40"></div>
 
-        {/* Tagline */}
-        <p className="absolute top-20 left-1/2 -translate-x-1/2 z-20 text-gray-200 text-lg font-medium bg-white/20 px-6 py-2 rounded-full border border-white/20 shadow-sm backdrop-blur">
+        
+        <p className="absolute top-20 left-1/2 -translate-x-1/2 z-20 text-gray-200 text-lg font-medium bg-white/20 px-6 py-2 rounded-full border border-white/20 shadow-sm -mt-8 backdrop-blur">
           Trusted Financial Partner Since 2009
         </p>
 
-        {/* Text Content */}
+       
         <div className="relative z-10 ml-5 flex flex-col text-left max-w-3xl mt-15">
           <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-2 leading-tight">
             {slideData[index].title}

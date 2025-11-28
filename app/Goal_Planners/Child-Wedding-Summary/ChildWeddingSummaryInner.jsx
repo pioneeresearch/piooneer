@@ -183,7 +183,7 @@ const router = useRouter();
     return (
         <div className="bg-gray-50 min-h-screen">
 
-            <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-19 from-blue-600 to-indigo-500  text-center text-white rounded-3xl shadow-lg pt-5 pb-5">
+            <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-5 from-blue-600 to-indigo-500  text-center text-white rounded-3xl shadow-lg pt-5 pb-5">
                 <div className="max-w-6xl mx-auto text-center px-4 ">
                     <h1 className="text-4xl font-semibold text-white-900 mb-2">
                         Child <span className="text-yellow-300">Wedding </span>

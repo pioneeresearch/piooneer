@@ -32,9 +32,9 @@ export default function FinancialPlanningPage() {
   return (
     <div className="min-h-screen bg-gray-50">
     
-      <div className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-19 from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg pt-5 pb-5">
+      <div className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-5 from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg pt-5 pb-5">
         
-        <h1 className="text-4xl font-bold mb-3 tracking-tight">
+        <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
           Financial <span className="text-yellow-300">Planning</span>
         </h1>
         <p className="text-lg text-blue-100 max-w-2xl mx-auto leading-relaxed">
