@@ -1,387 +1,257 @@
+"use client";
 
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import {
+  ArrowRight,
+  BadgeCheck,
+  BarChart3,
+  GraduationCap,
+  HeartPulse,
+  Home,
+  ShieldCheck,
+  Star,
+  Target,
+} from "lucide-react";
 
-  "use client";
+const HERO_SLIDES = [
+  {
+    image: "/bg/bg1.jpg",
+    eyebrow: "Trusted Since 2009",
+    title: "Strategic Wealth Planning For Long-Term Growth",
+    description:
+      "Comprehensive investment and risk-planning strategies tailored to your family goals and life milestones.",
+    ctaText: "Explore Wealth Planning",
+    ctaHref: "/Goal_Planners/Wealth-Creation",
+  },
+  {
+    image: "/bg/bg2.jpg",
+    eyebrow: "Goal-Based Advisory",
+    title: "Build The Home You Envision, Without Financial Stress",
+    description:
+      "Plan your down payment, debt strategy, and growth portfolio with a disciplined framework.",
+    ctaText: "Start Dream Home Plan",
+    ctaHref: "/Goal_Planners/Dream-home",
+  },
+  {
+    image: "/bg/bg4.jpg",
+    eyebrow: "Future-Ready Family Planning",
+    title: "Secure Your Child's Education With Smart Investing",
+    description:
+      "Create inflation-aware funding plans with SIP and diversified allocation designed for education milestones.",
+    ctaText: "Plan Child Education",
+    ctaHref: "/Goal_Planners/Child-Education",
+  },
+];
 
-  import { useEffect, useState } from "react";
-  import Link from "next/link";
-  export default function Hero() {
-    const slideData = [
-      {
-        img: "/bg/bg1.jpg",
-        title: "Your Trusted Partner In",
-        highlight: "Wealth Creation",
-        buttonText: "Explore Wealth Services →",
-        buttonURL: "/Goal_Planners/Wealth-Creation"
-      },
-      {
-        img: "/bg/bg2.jpg",
-        title: "Start Building the",
-        highlight: "Home You Truly Deserve",
-        buttonText: "Begin Your Dream Home Plan →",
-        buttonURL: "/Goal_Planners/Dream-home"
-      },
-      
-      {
-        img: "/bg/bg4.jpg",
-        title: "Build A Strong Future With",
-        highlight: "Child Education Goal",
-        buttonText: "Start Child Planning →",
-        buttonURL: "/Goal_Planners/Child-Education"
-      }
-    ];
+const HIGHLIGHTS = [
+  { value: "5000+", label: "Families Advised" },
+  { value: "15+", label: "Years Experience" },
+  { value: "INR 500Cr+", label: "Assets Guided" },
+];
 
-    const [index, setIndex] = useState(0);
+const SERVICES = [
+  {
+    icon: BarChart3,
+    title: "Mutual Fund Advisory",
+    description: "Portfolio design and rebalancing aligned to your risk profile and goals.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Insurance Planning",
+    description: "Right cover mix across term, health, and critical risk protection.",
+  },
+  {
+    icon: Target,
+    title: "Goal Planning",
+    description: "Dedicated strategies for retirement, home, education, and legacy goals.",
+  },
+  {
+    icon: HeartPulse,
+    title: "Family Security",
+    description: "Long-term protection framework for financial continuity in every life stage.",
+  },
+];
 
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setIndex((prev) => (prev + 1) % slideData.length);
-      }, 2500);
-      return () => clearInterval(interval);
-    }, []);
+const TESTIMONIALS = [
+  {
+    name: "Rajesh Kumar",
+    role: "Business Owner",
+    text: "Clear strategy, disciplined execution, and transparent advice. My portfolio is finally structured.",
+  },
+  {
+    name: "Priya Sharma",
+    role: "IT Professional",
+    text: "They simplified insurance and investment decisions and gave me an actionable roadmap.",
+  },
+  {
+    name: "Amit Patel",
+    role: "Entrepreneur",
+    text: "Professional and data-driven. Their tax and allocation guidance improved my yearly outcomes.",
+  },
+];
 
-    // -------------------- COMPONENTS --------------------
+function ServiceCard({ icon: Icon, title, description }) {
+  return (
+    <article className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+      <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-sky-50 text-sky-700">
+        <Icon size={22} />
+      </div>
+      <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
+      <p className="mt-2 text-sm leading-6 text-slate-600">{description}</p>
+    </article>
+  );
+}
 
-    function InfoCard({ number, text }) {
-      return (
-        <div className="flex flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-white rounded-3xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 transform hover:-translate-y-1">
-          <div className="text-blue-600 text-4xl font-extrabold mb-2">{number}</div>
-          <p className="text-gray-700 font-medium">{text}</p>
-        </div>
-      );
-    }
+function TestimonialCard({ name, role, text }) {
+  return (
+    <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="mb-3 flex items-center gap-2 text-amber-400">
+        {[...Array(5)].map((_, idx) => (
+          <Star key={idx} size={14} fill="currentColor" />
+        ))}
+      </div>
+      <p className="text-sm leading-6 text-slate-600">&quot;{text}&quot;</p>
+      <div className="mt-4 border-t border-slate-100 pt-4">
+        <p className="font-semibold text-slate-900">{name}</p>
+        <p className="text-xs text-slate-500">{role}</p>
+      </div>
+    </article>
+  );
+}
 
-    function MissionBox({ icon, title, text }) {
-      return (
-        <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 hover:-translate-y-1">
-          <div className="bg-blue-100 text-blue-600 w-12 h-12 flex items-center justify-center rounded-xl mb-3 text-lg">
-            <i className={`fa-solid ${icon}`}></i>
-          </div>
-          <h3 className="font-semibold text-gray-800 mb-2 text-lg">{title}</h3>
-          <p className="text-gray-600 text-sm leading-relaxed">{text}</p>
-        </div>
-      );
-    }
+export default function Hero() {
+  const [index, setIndex] = useState(0);
 
-    function ServiceCard({ icon, color, title, description }) {
-      return (
-        <div className="bg-white p-8 rounded-3xl shadow-md hover:shadow-xl hover:-translate-y-1 border border-gray-100 transition-all duration-300 text-center">
-          <div className={`bg-${color}-100 text-${color}-600 w-14 h-14 flex items-center justify-center rounded-2xl mb-4 mx-auto text-2xl`}>
-            <i className={`fa-solid ${icon}`}></i>
-          </div>
-          <h3 className="text-xl font-semibold text-gray-800 mb-3">{title}</h3>
-          <p className="text-gray-600 text-base leading-relaxed">{description}</p>
-        </div>
-      );
-    }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 4500);
 
-    function TestimonialCard({ name, role, text }) {
-      return (
-        <div className="bg-white p-8 rounded-3xl shadow-md hover:shadow-lg border border-gray-100 transition-all duration-300 border border-gray-100">
-          <div className="flex items-center mb-4 gap-3">
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-xl font-bold">
-              {name[0]}
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-800">{name}</h4>
-              <p className="text-sm text-gray-500">{role}</p>
-            </div>
-          </div>
+    return () => clearInterval(interval);
+  }, []);
 
-          <div className="flex mb-3 text-yellow-400">
-            {[...Array(5)].map((_, i) => (
-              <i key={i} className="fa-solid fa-star text-sm"></i>
-            ))}
-          </div>
+  const active = HERO_SLIDES[index];
 
-          <p className="text-gray-600 text-base italic leading-relaxed">“{text}”</p>
-        </div>
-      );
-    }
-
-    function SectionHeader({ label, title, color, subtitle }) {
-      return (
-        <div className="text-center mb-10 transition-all duration-200 hover:-translate-y-1  ">
-          <p className={`text-${color}-600 bg-${color}-100 px-6 py-2 rounded-full font-semibold inline-block  `}>
-            {label}
-          </p>
-
-          <h2 className="text-4xl font-extrabold text-gray-900 mt-5 mb-3">
-            {title.split(" ").slice(0, -2).join(" ")}{" "}
-            <span className={`text-${color}-600`}>
-              {title.split(" ").slice(-2).join(" ")}
-            </span>
-          </h2>
-
-          <p className="text-gray-500 max-w-2xl mx-auto text-lg">{subtitle}</p>
-        </div>
-      );
-    }
-    const cardData = [
-      { number: "5,000+", text: "Clients Served" },
-      { number: "15+", text: "Years Experience" },
-      { number: "₹500Cr+", text: "Assets Managed" }
-    ];
-
-
-    // -------------------- MAIN RETURN --------------------
-
-    return (
-      <div className="bg-white overflow-x-hidden">
-
-        <section className="relative min-h-[96vh] flex items-center px-4 py-20 sm:px-8 lg:px-10 overflow-hidden rounded-3xl -mt-9 transition duration-300 object-cover border border-gray-100">
-
-          {/* Background Images */}
-          {slideData.map((item, i) => (
-            <img
-              key={i}
-              src={item.img}
-              className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-[1500ms]
-              ${i === index ? "opacity-100" : "opacity-0"}`}
+  return (
+    <div className="overflow-x-hidden bg-[linear-gradient(180deg,#f7fbff_0%,#ffffff_30%,#f8fafc_100%)]">
+      <section className="relative isolate overflow-hidden border-b border-slate-200">
+        <div className="absolute inset-0">
+          {HERO_SLIDES.map((slide, i) => (
+            <Image
+              key={slide.image}
+              src={slide.image}
+              alt={slide.title}
+              fill
+              priority={i === 0}
+              className={`object-cover transition-opacity duration-1000 ${i === index ? "opacity-100" : "opacity-0"}`}
             />
           ))}
+          <div className="absolute inset-0 bg-[linear-gradient(110deg,rgba(2,6,23,0.88)_0%,rgba(2,6,23,0.76)_44%,rgba(2,6,23,0.55)_72%,rgba(2,6,23,0.25)_100%)]" />
+        </div>
 
-          
-          <div className="absolute inset-0 bg-black/40"></div>
+        <div className="relative mx-auto grid min-h-[68svh] w-full max-w-7xl items-center gap-7 px-3 py-14 min-[380px]:px-4 min-[380px]:py-16 sm:min-h-[72svh] sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-10 lg:px-8 lg:py-24">
+          <div className="max-w-xl text-white">
+            <p className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-1.5 text-[11px] font-semibold tracking-wide backdrop-blur min-[380px]:px-4 min-[380px]:text-xs">
+              <BadgeCheck size={14} />
+              <span className="truncate">{active.eyebrow}</span>
+            </p>
+            <h1 className="mt-4 break-words text-2xl font-bold leading-tight min-[380px]:text-3xl sm:mt-5 sm:text-5xl">{active.title}</h1>
+            <p className="mt-4 text-sm leading-6 text-slate-200 min-[380px]:text-base min-[380px]:leading-7">{active.description}</p>
 
-          
-          <p className="absolute top-20 left-1/2 z-20 w-[92%] -translate-x-1/2 rounded-full bg-white/20 px-4 py-2 text-center text-sm font-medium text-gray-200 shadow-sm backdrop-blur sm:w-auto sm:px-6 sm:text-lg">
-            Trusted Financial Partner Since 2009
-          </p>
-
-        
-          <div className="relative z-10 ml-1 mt-14 flex max-w-3xl flex-col text-left sm:ml-5">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-2 leading-tight">
-              {slideData[index].title}
-            </h2>
-
-            <h1 className="text-5xl md:text-6xl font-extrabold text-blue-600 mb-6 leading-tight drop-shadow">
-              {slideData[index].highlight}
-            </h1>
-
-            <div className="flex flex-wrap gap-5 mb-10">
+            <div className="mt-7 flex flex-col items-stretch gap-3 min-[380px]:mt-8 min-[380px]:flex-row min-[380px]:flex-wrap min-[380px]:items-center">
               <Link
-                href={slideData[index].buttonURL}
-                className="px-7 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-700 shadow-md transition"
+                href={active.ctaHref}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-900/30 transition-all duration-300 hover:-translate-y-0.5 hover:bg-sky-400 min-[380px]:w-auto"
               >
-                {slideData[index].buttonText}
+                {active.ctaText}
+                <ArrowRight size={16} />
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex w-full items-center justify-center rounded-xl border border-white/40 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/20 min-[380px]:w-auto"
+              >
+                Book Consultation
               </Link>
             </div>
-          </div>
-          <div className="absolute bottom-4 right-4 z-10 hidden sm:block">
 
-            <div className="w-[220px] transition-opacity duration-700">
-              <InfoCard
-                number={cardData[index % cardData.length].number}
-                text={cardData[index % cardData.length].text}
-              />
-            </div>
-
-          </div>
-        </section>
-
-
-
-        {/* ------------------- NEXT SECTIONS SAME AS BEFORE ------------------- */}
-
-        <section className="flex flex-col md:flex-row items-center justify-center gap-14 bg-gray-50 py-20 px-8">
-          <div className="relative md:w-1/2 w-full">
-            <img
-              src="/team1.jpg"
-              alt="Financial Team"
-              className="rounded-3xl shadow-2xl w-full h-[480px] transition duration-500 hover:scale-105 object-cover border border-gray-100"
-            />
-
-            <div className="absolute bottom-6 right-6 bg-white shadow-lg rounded-2xl px-5 py-3 flex items-center gap-3 border border-gray-100">
-              <div className="bg-blue-100 text-blue-600 p-3 rounded-full">
-                <i className="fa-solid fa-trophy text-xl"></i>
-              </div>
-              <div >
-                <h3 className="text-lg font-bold text-gray-800 ">15+</h3>
-                <p className="text-sm text-gray-500">Awards Won</p>
-              </div>
+            <div className="mt-8 flex items-center gap-2">
+              {HERO_SLIDES.map((_, dotIdx) => (
+                <button
+                  key={dotIdx}
+                  type="button"
+                  onClick={() => setIndex(dotIdx)}
+                  className={`h-2.5 rounded-full transition-all ${dotIdx === index ? "w-8 bg-white" : "w-2.5 bg-white/45"}`}
+                  aria-label={`Go to slide ${dotIdx + 1}`}
+                />
+              ))}
             </div>
           </div>
 
-          <div className="md:w-1/2 w-full text-left">
-            <h2 className="text-4xl font-extrabold text-gray-800 mb-5">
-              Building Financial Futures <span className="text-blue-600">Since 2009</span>
-            </h2>
+          <div className="hidden grid-cols-1 gap-3 min-[480px]:grid sm:grid-cols-3 lg:grid-cols-1">
+            {HIGHLIGHTS.map((item) => (
+              <div key={item.label} className="rounded-2xl border border-white/25 bg-white/10 p-5 text-white backdrop-blur-md">
+                <p className="text-2xl font-bold sm:text-3xl">{item.value}</p>
+                <p className="mt-1 text-xs font-medium tracking-wide text-slate-200 sm:text-sm">{item.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            <p className="text-gray-600 mb-8 leading-relaxed text-lg">
-              Pioneer Wealth Solutions is your dedicated partner in navigating
-              the complex world of finance. We combine deep expertise with
-              personalized service to help you achieve your financial dreams.
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700">About Pioneer Wealth</p>
+            <h2 className="mt-3 text-3xl font-bold text-slate-900 sm:text-4xl">Financial clarity with disciplined execution</h2>
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              We combine advisory discipline, data-backed planning, and clear communication to help you make confident
+              long-term financial decisions.
             </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-              <MissionBox icon="fa-bullseye" title="Our Mission" text="Empowering individuals and families to achieve financial security through expert guidance and innovative solutions." />
-              <MissionBox icon="fa-eye" title="Our Vision" text="To be India’s most trusted financial advisory firm, transforming lives through wealth creation and protection." />
-            </div>
-
-            <button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300 shadow-md">
-              Learn More About Us
-            </button>
-          </div>
-        </section>
-        <section className="relative bg-white rounded-3xl shadow-md border border-gray-100 hover:shadow-2xl hover:-translate-y-1 transition-all  mb-1 duration-200 text-center p-8 ">
-          <SectionHeader
-            label="Our Services"
-            title="Comprehensive Financial Solutions"
-            color="blue"
-            subtitle="From investment planning to insurance and tax optimization, we provide everything to help you reach your financial goals."
-          />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
-            <ServiceCard
-              icon="fa-chart-line"
-              color="blue"
-              title="Mutual Funds"
-              description="Invest smartly in top-rated mutual funds with expert insights and portfolio management."
-            />
-            <ServiceCard
-              icon="fa-shield-heart"
-              color="green"
-              title="Life Insurance"
-              description="Secure your family's future with personalized life insurance plans."
-            />
-            <ServiceCard
-              icon="fa-heart-pulse"
-              color="red"
-              title="Health Insurance"
-              description="Comprehensive health plans to safeguard your family’s well-being."
-            />
-            <ServiceCard
-              icon="fa-file-invoice-dollar"
-              color="purple"
-              title="Tax Planning"
-              description="Save more with smart tax strategies and expert consultation."
-            />
-            <ServiceCard
-              icon="fa-briefcase"
-              color="orange"
-              title="Financial Advisory"
-              description="Personalized advice from experts for confident investment decisions."
-            />
-            <ServiceCard
-              icon="fa-piggy-bank"
-              color="teal"
-              title="Retirement Planning"
-              description="Plan early, retire peacefully with smart pension strategies."
-            />
-          </div>
-
-          <button className="px-8 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-100 transition duration-300 shadow-sm">
-            View All Services
-          </button>
-        </section>
-
-
-        <section className="relative  py-16 bg-white rounded-3xl shadow-md border border-gray-100 hover:shadow-2xl hover:-translate-y-1 transition-all duration-200 text-center p-8">
-          <SectionHeader
-            label="Testimonials"
-            title="What Our Clients Say About Us"
-            color="blue"
-            subtitle="Real stories from real people who trusted us with their financial future."
-          />
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <TestimonialCard
-              name="Rajesh Kumar"
-              role="Business Owner"
-              text="Pioneer Wealth transformed our financial planning. Their mutual fund advice helped us grow our savings effectively!"
-            />
-            <TestimonialCard
-              name="Priya Sharma"
-              role="IT Professional"
-              text="Excellent service and personalized attention. They made complex insurance decisions simple and effective."
-            />
-            <TestimonialCard
-              name="Amit Patel"
-              role="Entrepreneur"
-              text="Highly professional team — their tax planning strategies saved me a lot last year. Highly recommend!"
-            />
-          </div>
-        </section>
-        <section className="bg-gradient-to-b from-white to-blue-50 py-16 text-center">
-          <p className="text-gray-500 text-sm uppercase tracking-widest mb-2">
-            Trusted by Leading Financial Institutions
-          </p>
-
-          <h2 className="text-3xl font-extrabold text-gray-800 mb-12">
-            Our <span className="text-blue-600">Partners</span>
-          </h2>
-
-          <div className="flex flex-wrap justify-center items-center gap-12 max-w-6xl mx-auto">
-
-            <img
-              src="/partners/hdfc.svg"
-              alt="HDFC Bank"
-              className="h-14 opacity-80 hover:opacity-100 transition-transform duration-300 hover:scale-110"
-            />
-
-
-            <img
-              src="/partners/icici.svg"
-              alt="ICICI Bank"
-              className="h-14 opacity-80 hover:opacity-100 transition-transform duration-300 hover:scale-110"
-            />
-
-
-            <img
-              src="/partners/axis3.jpeg"
-              alt="Axis Bank"
-              className="h-14 opacity-80 hover:opacity-100 transition-transform duration-300 hover:scale-110"
-            />
-
-
-            <img
-              src="/partners/lic.png"
-              alt="LIC"
-              className="h-14 opacity-80 hover:opacity-100 transition-transform duration-300 hover:scale-110"
-            />
-
-
-
-          </div>
-        </section>
-
-
-
-        <section className="py-18 px-8 mx-8 bg-gradient-to-r from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-xl mt-1">
-          <h2 className="text-4xl font-extrabold mb-4">
-            Ready to <span className="text-yellow-300">Grow Your Wealth?</span>
-          </h2>
-          <p className="text-blue-100 mb-10 max-w-2xl mx-auto">
-            Let’s build your personalized financial plan with our experts — crafted
-            for your goals and dreams.
-          </p>
-
-          <div className="flex flex-col sm:flex-row justify-center gap-5 mb-12">
-            <button className="bg-white text-blue-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 shadow-md transition">
-              Get Started Today →
-            </button>
-            <Link href="/contact">
-    <button className="border border-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-700 transition">
-      Contact Us
-    </button>
-  </Link>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-12 text-blue-100 text-sm">
-            <div>
-              <h3 className="text-white text-2xl font-bold mb-1">100%</h3>
-              <p>Satisfaction Rate</p>
-            </div>
-            <div>
-              <h3 className="text-white text-2xl font-bold mb-1">24/7</h3>
-              <p>Customer Support</p>
-            </div>
-            <div>
-              <h3 className="text-white text-2xl font-bold mb-1">Free</h3>
-              <p>Consultation</p>
+            <div className="mt-6 space-y-3">
+              <p className="flex items-center gap-2 text-sm text-slate-700"><Target size={16} className="text-sky-700" /> Goal-based investment roadmaps</p>
+              <p className="flex items-center gap-2 text-sm text-slate-700"><GraduationCap size={16} className="text-sky-700" /> Family-focused education and retirement planning</p>
+              <p className="flex items-center gap-2 text-sm text-slate-700"><Home size={16} className="text-sky-700" /> Milestone planning for home and legacy goals</p>
             </div>
           </div>
-        </section>
-      </div>
-    );
-  }
+
+          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-2 shadow-xl">
+            <Image src="/team1.jpg" alt="Pioneer Wealth advisory team" width={1000} height={700} className="h-[360px] w-full rounded-2xl object-cover" />
+            <div className="absolute bottom-5 left-5 rounded-xl bg-white/90 px-4 py-3 shadow-lg backdrop-blur">
+              <p className="text-xs font-semibold uppercase tracking-wide text-sky-700">Advisory Excellence</p>
+              <p className="text-sm font-semibold text-slate-900">Trusted by families and business owners</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-slate-200 bg-slate-50/70">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700">Core Services</p>
+            <h2 className="mt-3 text-3xl font-bold text-slate-900 sm:text-4xl">Professional financial solutions</h2>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {SERVICES.map((item) => (
+              <ServiceCard key={item.title} {...item} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mb-10 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700">Client Feedback</p>
+          <h2 className="mt-3 text-3xl font-bold text-slate-900 sm:text-4xl">What clients value most</h2>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-3">
+          {TESTIMONIALS.map((item) => (
+            <TestimonialCard key={item.name} {...item} />
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}

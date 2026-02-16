@@ -1,17 +1,12 @@
 "use client";
 
-import { Search, User, Sun, Moon } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Moon, Search, Sun, User } from "lucide-react";
+import { useState } from "react";
 
 export default function Topbar() {
-  const [theme, setTheme] = useState("light");
-
-  useEffect(() => {
-    if (localStorage.theme === "dark") {
-      document.documentElement.classList.add("dark");
-      setTheme("dark");
-    }
-  }, []);
+  const [theme, setTheme] = useState(
+    typeof window !== "undefined" && window.localStorage.theme === "dark" ? "dark" : "light"
+  );
 
   const toggleTheme = () => {
     const isDark = theme === "light";
@@ -60,8 +55,14 @@ export default function Topbar() {
             />
           </div>
 
-         
-          
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="grid h-9 w-9 place-items-center rounded-lg border border-gray-300 text-gray-600 transition-colors hover:bg-gray-100 dark:border-slate-600 dark:text-gray-100 dark:hover:bg-slate-800"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
 
           {/* PROFILE */}
           <div className="h-9 w-9 rounded-full bg-blue-600 text-white flex items-center justify-center">

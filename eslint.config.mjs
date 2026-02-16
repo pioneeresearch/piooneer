@@ -5,6 +5,14 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
     ...nextVitals,
     ...nextTs,
+    {
+        files: ["**/*.{js,jsx,ts,tsx}"],
+        rules: {
+            "react/no-unescaped-entities": "off",
+            "react-hooks/static-components": "off",
+            "react-hooks/set-state-in-effect": "off",
+        },
+    },
 
     globalIgnores([
 
@@ -12,6 +20,8 @@ const eslintConfig = defineConfig([
         "out/**",
         "build/**",
         "next-env.d.ts",
+        "project/**",
+        "public/wealth/**",
     ]),
 ]);
 

@@ -49,6 +49,7 @@ export default function VisitingCardPage() {
 
   const cleanPhone = useMemo(() => phone.replace(/[^\d+\-\s()]/g, ""), [phone]);
   const validPhone = useMemo(() => /^[0-9+\-\s()]{7,20}$/.test(cleanPhone), [cleanPhone]);
+  const displayPhone = useMemo(() => cleanPhone.trim() || COMPANY.phone, [cleanPhone]);
 
   const handleCreateCard = (e) => {
     e.preventDefault();
@@ -65,27 +66,13 @@ export default function VisitingCardPage() {
 
     setPreviewReady(true);
     setShowPopup(false);
+    setTimeout(() => {
+      void handleDownload({ force: true });
+    }, 220);
   };
 
-  const triggerDownload = (blob, filename) => {
-    const link = document.createElement("a");
-    link.download = filename;
-
-    if (blob) {
-      const objectUrl = URL.createObjectURL(blob);
-      link.href = objectUrl;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
-      return;
-    }
-
-    link.href = "";
-  };
-
-  const handleDownload = async () => {
-    if (!previewReady) {
+  const handleDownload = async ({ force = false } = {}) => {
+    if (!previewReady && !force) {
       setShowPopup(true);
       return;
     }
@@ -108,7 +95,7 @@ export default function VisitingCardPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             userName: name.trim(),
-            userPhone: cleanPhone.trim(),
+            userPhone: displayPhone,
             companyName: COMPANY.name,
             subtitle: COMPANY.subtitle,
             companyPhone: COMPANY.phone,
@@ -142,27 +129,13 @@ export default function VisitingCardPage() {
       });
 
       const filename = `${name.trim().replace(/\s+/g, "-").toLowerCase()}-visiting-card.png`;
-
-      if (canvas.toBlob) {
-        const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png", 1));
-        if (blob) {
-          triggerDownload(blob, filename);
-        } else {
-          const link = document.createElement("a");
-          link.href = canvas.toDataURL("image/png");
-          link.download = filename;
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
-        }
-      } else {
-        const link = document.createElement("a");
-        link.href = canvas.toDataURL("image/png");
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-      }
+      const dataUrl = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.setAttribute("href", dataUrl);
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
 
       if (savedToAdmin) {
         setSaveStatus("Downloaded successfully. Data saved in admin.");
@@ -240,7 +213,7 @@ export default function VisitingCardPage() {
                         <span className="grid h-6 w-6 place-items-center rounded-md bg-[#123F72]">
                           <Phone size={12} />
                         </span>
-                        <span>{previewReady && cleanPhone.trim() ? cleanPhone.trim() : "+00 123 456 789"}</span>
+                        <span>{displayPhone}</span>
                       </p>
                       <p className="flex items-center gap-2.5">
                         <span className="grid h-6 w-6 place-items-center rounded-md bg-[#123F72]">
@@ -298,7 +271,7 @@ export default function VisitingCardPage() {
             </div>
             <div className="flex items-start justify-between gap-4">
               <span className="text-sm" style={{ color: "#4F667A" }}>Mobile</span>
-              <span className="text-right text-sm font-semibold text-slate-900">{cleanPhone || "-"}</span>
+              <span className="text-right text-sm font-semibold text-slate-900">{displayPhone}</span>
             </div>
           </div>
 

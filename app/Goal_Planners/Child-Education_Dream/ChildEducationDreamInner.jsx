@@ -2,6 +2,7 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import Link from "next/link";
 
 export default function ChildEducationDreamInner() {
   const search = useSearchParams();
@@ -45,7 +46,7 @@ export default function ChildEducationDreamInner() {
             Child's <span className="text-yellow-300">Education</span>
           </h1>
           <div className="flex justify-center gap-2 text-sm text-white-600">
-            <a href="/" className="underline">Home</a>
+            <Link href="/" className="underline">Home</Link>
             <span className="text-white-400">/</span>
             <span>Goal</span>
             <span className="text-white-400">/</span>

@@ -1,182 +1,116 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { ArrowRight, BriefcaseBusiness, HeartPulse, PiggyBank, ShieldCheck, Target, Wallet } from "lucide-react";
 
-export default function Services() {
-  
+const SERVICE_CATEGORIES = ["All", "Investment", "Insurance", "Tax", "Advisory"];
+
+const SERVICES = [
+  {
+    id: 1,
+    title: "Mutual Fund Advisory",
+    description: "Evidence-based fund selection and disciplined allocation for long-term wealth growth.",
+    icon: Wallet,
+    category: "Investment",
+  },
+  {
+    id: 2,
+    title: "Life Insurance Planning",
+    description: "Right coverage structure for family protection, liabilities, and life-stage priorities.",
+    icon: ShieldCheck,
+    category: "Insurance",
+  },
+  {
+    id: 3,
+    title: "Health Insurance Planning",
+    description: "Comprehensive protection strategy with family floater and critical rider evaluation.",
+    icon: HeartPulse,
+    category: "Insurance",
+  },
+  {
+    id: 4,
+    title: "Tax Planning",
+    description: "Tax-aware investing and deduction optimization aligned with your annual financial goals.",
+    icon: Target,
+    category: "Tax",
+  },
+  {
+    id: 5,
+    title: "Wealth Advisory",
+    description: "Goal-based planning, risk profiling, and periodic reviews to keep execution on track.",
+    icon: BriefcaseBusiness,
+    category: "Advisory",
+  },
+  {
+    id: 6,
+    title: "Retirement Planning",
+    description: "Structured retirement corpus planning with inflation-aware accumulation and drawdown strategy.",
+    icon: PiggyBank,
+    category: "Advisory",
+  },
+];
+
+export default function ServicesPage() {
   const [activeCategory, setActiveCategory] = useState("All");
 
-  // ---------- SERVICE DATA ----------
-  const services = [
-    {
-      id: 1,
-      title: "Mutual Funds",
-      description:
-        "We help you invest smartly in top-rated mutual funds to grow your wealth with expert market insights.",
-      icon: "fa-chart-line",
-      color: "blue",
-      category: "Investment",
-    },
-    {
-      id: 2,
-      title: "Life Insurance",
-      description:
-        "Secure your family's financial future with personalized life insurance plans that match your goals.",
-      icon: "fa-shield-heart",
-      color: "green",
-      category: "Insurance",
-    },
-    {
-      id: 3,
-      title: "Health Insurance",
-      description:
-        "Protect yourself and your family with our comprehensive health insurance options.",
-      icon: "fa-heart-pulse",
-      color: "red",
-      category: "Insurance",
-    },
-    {
-      id: 4,
-      title: "Tax Planning",
-      description:
-        "Strategic tax optimization to help you save more while staying compliant with regulations.",
-      icon: "fa-file-invoice-dollar",
-      color: "yellow",
-      category: "Tax",
-      features: [
-        "Tax saving investments",
-        "ITR filing assistance",
-        "80C to 80U deductions",
-        "Long-term tax strategy",
-      ],
-    },
-    {
-      id: 5,
-      title: "Financial Advisory",
-      description:
-        "Personalized wealth management strategies aligned with your long-term financial goals.",
-      icon: "fa-briefcase",
-      color: "orange",
-      category: "Advisory",
-      features: [
-        "Goal-based planning",
-        "Risk assessment",
-        "Portfolio diversification",
-        "Regular monitoring",
-      ],
-    },
-    {
-      id: 6,
-      title: "Retirement Planning",
-      description:
-        "Build a robust retirement corpus to enjoy your golden years without financial worries.",
-      icon: "fa-piggy-bank",
-      color: "green",
-      category: "Advisory",
-      features: [
-        "NPS & EPF planning",
-        "Pension schemes",
-        "Retirement calculator",
-        "Corpus building strategy",
-      ],
-    },
-  ];
+  const filteredServices = useMemo(() => {
+    if (activeCategory === "All") return SERVICES;
+    return SERVICES.filter((service) => service.category === activeCategory);
+  }, [activeCategory]);
 
-  // ---------- FILTER LOGIC ----------
-  const filteredServices =
-    activeCategory === "All"
-      ? services
-      : services.filter((service) => service.category === activeCategory);
-
-
-  function ServiceCard({ icon, color, title, description, features }) {
-    return (
-      <div className="bg-white p-8 rounded-2xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-left flex flex-col justify-between">
-      
-        <div>
-          <div
-            className={`bg-${color}-100 text-${color}-600 w-14 h-14 flex items-center justify-center rounded-xl mb-5`}
-          >
-            <i className={`fa-solid ${icon} text-2xl`}></i>
-          </div>
-         
-          <h3 className="text-2xl font-semibold text-gray-800 mb-2">{title}</h3>
-          <p className="text-gray-600 text-base leading-relaxed mb-4">
-            {description}
+  return (
+    <div className="bg-slate-50">
+      <section className="mx-auto max-w-7xl px-4 pb-8 pt-8 sm:px-6 lg:px-8">
+        <div className="rounded-3xl bg-gradient-to-r from-sky-700 to-blue-900 px-6 py-14 text-center text-white shadow-xl sm:px-10">
+          <h1 className="text-3xl font-bold sm:text-5xl">Professional financial services</h1>
+          <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-sky-100 sm:text-base">
+            Comprehensive advisory solutions covering investments, insurance, tax planning, and long-term wealth strategy.
           </p>
+        </div>
+      </section>
 
-       
-          {features && (
-            <ul className="text-gray-600 text-sm space-y-2 mb-6">
-              {features.map((feature, i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <i className="fa-solid fa-check text-blue-600 mt-1"></i>
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-          )}
+      <section className="mx-auto max-w-7xl px-4 pb-16 pt-6 sm:px-6 lg:px-8">
+        <div className="mb-8 flex flex-wrap justify-center gap-3">
+          {SERVICE_CATEGORIES.map((category) => {
+            const active = category === activeCategory;
+            return (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setActiveCategory(category)}
+                className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+                  active
+                    ? "border-sky-700 bg-sky-700 text-white"
+                    : "border-slate-300 bg-white text-slate-700 hover:border-sky-300 hover:text-sky-700"
+                }`}
+              >
+                {category}
+              </button>
+            );
+          })}
         </div>
 
-        <button className="mt-auto bg-blue-600 text-white w-full py-3 rounded-xl font-medium hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2 shadow-md">
-          Enquire Now <i className="fa-solid fa-arrow-right"></i>
-        </button>
-      </div>
-    );
-  }
-
-  // ---------- CATEGORY BUTTON COMPONENT ----------
-  function CategoryButton({ label }) {
-    const isActive = activeCategory === label;
-    return (
-      <button
-        onClick={() => setActiveCategory(label)}
-        className={`px-6 py-2 rounded-full font-medium border transition-all ${
-          isActive
-            ? "bg-blue-600 text-white border-blue-600 shadow-md"
-            : "bg-white text-gray-600 border-gray-300 hover:bg-blue-50"
-        }`}
-      >
-        {label}
-      </button>
-    );
-  }
-
-  // ---------- PAGE RETURN ----------
-  return (
-    <div className="bg-white">
-     <section className="py-16 px-6 w-full  -mt-10 from-white to-indigo-500 text-white bg-white  pb-4">
-        
-      </section>
-
-      <section className="py-20 px-6 mx-6 md:mx-12 mt-5 bg-gradient-to-r from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg mb-16 pb-5 pt-5">
-        <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
-          Our <span className="text-yellow-300">Services</span>
-        </h1>
-        <p className="text-blue-100 text-lg md:text-xl max-w-3xl mx-auto">
-          Comprehensive financial solutions tailored to your unique needs and goals.
-        </p>
-      </section>
-
-      {/* ---------- FILTER BUTTONS ---------- */}
-      <div className="flex flex-wrap justify-center gap-4 mb-12">
-        {["All", "Investment", "Insurance", "Tax", "Advisory"].map((cat) => (
-          <CategoryButton key={cat} label={cat} />
-        ))}
-      </div>
-
-      
-      <section className="max-w-6xl mx-auto px-6 pb-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {filteredServices.map((service) => (
-          <ServiceCard
-            key={service.id}
-            icon={service.icon}
-            color={service.color}
-            title={service.title}
-            description={service.description}
-            features={service.features}
-          />
-        ))}
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredServices.map((service) => {
+            const Icon = service.icon;
+            return (
+              <article key={service.id} className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-sky-50 text-sky-700">
+                  <Icon size={22} />
+                </div>
+                <h2 className="text-lg font-semibold text-slate-900">{service.title}</h2>
+                <p className="mt-2 flex-grow text-sm leading-6 text-slate-600">{service.description}</p>
+                <button
+                  type="button"
+                  className="mt-5 inline-flex items-center gap-2 rounded-xl bg-sky-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sky-800"
+                >
+                  Enquire Now
+                  <ArrowRight size={16} />
+                </button>
+              </article>
+            );
+          })}
+        </div>
       </section>
     </div>
   );

@@ -1,198 +1,109 @@
-export default function About() {
+import Image from "next/image";
+import { Award, ShieldCheck, Target, Users } from "lucide-react";
 
-  function ServiceCard({ icon, color, title, description, className }) {
-    return (
-      <div className="bg-white p-10 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center relative overflow-hidden group">
+const VALUES = [
+  {
+    icon: ShieldCheck,
+    title: "Integrity",
+    description: "Transparent advice and responsible financial decision-making at every step.",
+  },
+  {
+    icon: Users,
+    title: "Client First",
+    description: "Plans are designed around your family goals, risk comfort, and timelines.",
+  },
+  {
+    icon: Award,
+    title: "Excellence",
+    description: "Disciplined process, regular reviews, and data-backed recommendations.",
+  },
+  {
+    icon: Target,
+    title: "Long-Term Focus",
+    description: "Sustainable wealth strategies built for life milestones, not short-term noise.",
+  },
+];
 
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-indigo-100 opacity-0 group-hover:opacity-100 blur-2xl transition duration-500"></div>
+const TEAM = [
+  { image: "/anu.jpg", name: "Rajesh Mehta", role: "Founder and CEO" },
+  { image: "/item33.jpg", name: "Anjali Desai", role: "Head of Investments" },
+  { image: "/item45.jpg", name: "Vikram Singh", role: "Insurance Specialist" },
+  { image: "/item44.jpg", name: "Sneha Reddy", role: "Tax Consultant" },
+];
 
-        <div
-          className={`relative bg-${color}-100 text-${color}-600 w-16 h-16 flex items-center justify-center rounded-2xl mb-6 mx-auto shadow-inner`}
-        >
-          <i className={`fa-solid ${icon} text-3xl`}></i>
-        </div>
-        <h3 className="relative text-2xl font-bold text-gray-800 mb-3">
-          {title}
-        </h3>
-        <p className="relative text-gray-600 text-base leading-relaxed px-2">
-          {description}
-        </p>
-      </div>
-    );
-  }
+export const metadata = {
+  title: "About",
+  description:
+    "Learn about Pioneer Wealth Solutions, our advisory philosophy, values, and the team helping families build long-term financial confidence.",
+};
 
-
-  function SectionHeader({ label, title, subtitle, color }) {
-    return (
-      <div className="text-center mb-14">
-        {label && (
-          <p className={`text-${color}-600 font-semibold uppercase mb-2`}>
-            {label}
-          </p>
-        )}
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-3 tracking-tight">
-          {title}
-        </h2>
-        <p className="text-gray-500 text-lg max-w-2xl mx-auto">{subtitle}</p>
-      </div>
-    );
-  }
-
-
-  function TeamCard({ image, name, role }) {
-    return (
-      <div className="relative bg-white rounded-3xl shadow-md border border-gray-100 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 text-center p-8">
-        <div className="w-28 h-28 mx-auto mb-5">
-          <img
-            src={image}
-            alt={name}
-            className="w-full h-full object-cover rounded-full border-4 border-blue-200 shadow-md"
-          />
-        </div>
-        <h3 className="text-xl font-semibold text-gray-800">{name}</h3>
-        <p className="text-gray-500">{role}</p>
-
-
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-blue-50 to-indigo-50 opacity-0 group-hover:opacity-100 transition duration-700 -z-10"></div>
-      </div>
-    );
-  }
-
-
+export default function AboutPage() {
   return (
-    <div className="bg-white">
-      <section className="py-16 px-6 w-full  -mt-10 from-white to-indigo-500 text-white bg-white  pb-4">
-        
-      </section>
-
-
-      <section className="py-20 px-6 mx-6 md:mx-12 bg-gradient-to-r mt-5 from-blue-600 to-indigo-500 text-center text-white rounded-3xl shadow-lg pb-5 pt-5">
-        <h1 className="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-md">
-          About <span className="text-yellow-300">Pioneer Wealth</span> Solutions
-        </h1>
-        <p className="text-blue-100 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-          Building trust, delivering excellence, and empowering financial futures since 2009.
-        </p>
-      </section>
-
-
-     <section className="py-12 px-6 bg-gray max-w-6xl mx-auto relative overflow-hidden rounded-3xl shadow-xl mt-10 border-gray-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
-
-  <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-indigo-50 to-transparent opacity-80 blur-3xl -z-10"></div>
-
-  {/* Heading Center Fix */}
-  <div className="flex justify-center">
-    <h2
-      className="text-3xl font-bold text-blue-600 
-                 relative inline-block px-10 py-1 pb-3 
-                  rounded-md
-                 transition-all duration-300 hover:-translate-y-1">
-      Who We Are
-    </h2>
-  </div>
-
-  <div className="grid md:grid-cols-2 gap-8 items-center mt-6">
-
-    <div className="flex justify-center">
-      <img
-        src="/neww.jpg"
-        alt="Team Collaboration"
-        className="rounded-3xl shadow-2xl w-full max-w-2xl transform hover:scale-105 transition duration-500 object-cover"
-      />
-    </div>
-
-    <div>
-      <p className="text-gray-700 text-lg leading-relaxed mb-6">
-        <span className="font-semibold text-blue-600">Pioneer Wealth Solutions</span> isn’t just
-        another financial firm — we’re a passionate team on a mission to simplify finance and help
-        dreams come true. Since our inception in 2009, we’ve guided thousands toward financial freedom.
-      </p>
-
-      <p className="text-gray-700 text-lg leading-relaxed mb-6">
-        From smart investments to insurance and tax strategies, we tailor each plan with precision —
-        blending innovation, ethics, and empathy. Our goal is simple: ensure your money works harder
-        for you while you focus on <span className="italic text-indigo-600">living your best life.</span>
-      </p>
-
-      <p className="text-gray-700 text-lg leading-relaxed">
-        With over <span className="font-semibold text-blue-600">15 years</span> of excellence, we
-        empower our clients to build wealth that lasts for generations.
-      </p>
-    </div>
-
-  </div>
-</section>
-
-
-
-      <section className="text-center py-20 bg-gray-50 px-6">
-
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-10">
-          <ServiceCard
-            icon="fa-bullseye"
-            color="blue"
-            title="Our Mission"
-            description="To empower individuals and families to achieve financial security and prosperity through expert guidance, innovative solutions, and unwavering commitment to their success."
-          />
-          <ServiceCard
-            icon="fa-eye"
-            color="indigo"
-            title="Our Vision"
-            description="To be India’s most trusted and respected financial advisory firm, recognized for transforming lives through wealth creation, protection, and sustainable financial planning."
-          />
+    <div className="bg-slate-50">
+      <section className="mx-auto max-w-7xl px-4 pb-8 pt-8 sm:px-6 lg:px-8">
+        <div className="overflow-hidden rounded-3xl bg-gradient-to-r from-sky-700 to-blue-900 px-6 py-14 text-white shadow-xl sm:px-10">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-200">About Pioneer Wealth</p>
+          <h1 className="mt-3 text-3xl font-bold sm:text-5xl">Built on trust, discipline, and long-term thinking</h1>
+          <p className="mt-4 max-w-3xl text-sm leading-7 text-sky-100 sm:text-base">
+            Since 2009, we have helped clients simplify financial decisions through structured planning, risk protection,
+            and goal-driven investing.
+          </p>
         </div>
       </section>
 
+      <section className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-10 sm:px-6 lg:grid-cols-2 lg:px-8">
+        <div>
+          <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">Who we are</h2>
+          <p className="mt-4 text-base leading-7 text-slate-600">
+            Pioneer Wealth Solutions is a professional advisory team focused on practical financial planning. We combine
+            personalized strategy, portfolio discipline, and regular tracking so clients can move toward their goals with
+            confidence.
+          </p>
+          <p className="mt-4 text-base leading-7 text-slate-600">
+            From wealth creation and insurance planning to tax-aware investing, our recommendations are built for clarity,
+            consistency, and measurable progress.
+          </p>
+        </div>
 
-      <section className="text-center py-20 bg-white px-6">
-        <SectionHeader
-
-
-          title=" Our Core Values"
-          subtitle="The principles that guide everything we do."
-          color="blue"
-        />
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-          <ServiceCard
-            icon="fa-shield"
-            color="blue"
-            title="Integrity"
-            description="We uphold the highest standards of honesty and transparency in all our dealings."
-          />
-          <ServiceCard
-            icon="fa-user-group"
-            color="indigo"
-            title="Trust"
-            description="Building lasting relationships based on reliability and consistent performance."
-          />
-          <ServiceCard
-            icon="fa-award"
-            color="blue"
-            title="Excellence"
-            description="Delivering superior service quality and exceeding client expectations."
-          />
-          <ServiceCard
-            icon="fa-chart-line"
-            color="indigo"
-            title="Growth"
-            description="Committed to continuous improvement and helping clients achieve their financial goals."
-          />
+        <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white p-2 shadow-lg">
+          <Image src="/neww.jpg" alt="Pioneer Wealth team collaboration" width={1200} height={800} className="h-[360px] w-full rounded-2xl object-cover" />
         </div>
       </section>
 
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <h2 className="text-center text-2xl font-bold text-slate-900 sm:text-3xl">Our core values</h2>
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {VALUES.map((item) => {
+            const Icon = item.icon;
+            return (
+              <article key={item.title} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-sky-50 text-sky-700">
+                  <Icon size={22} />
+                </div>
+                <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+              </article>
+            );
+          })}
+        </div>
+      </section>
 
-      <section className="text-center py-20 bg-gray-50 px-6">
-        <SectionHeader
-
-          title=" Meet Our Team"
-          subtitle="Experienced professionals dedicated to your financial success."
-          color="blue"
-        />
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-          <TeamCard image="/anu.jpg" name="Rajesh Mehta" role="Founder & CEO" />
-          <TeamCard image="/item33.jpg" name="Anjali Desai" role="Head of Investments" />
-          <TeamCard image="/item45.jpg" name="Vikram Singh" role="Insurance Specialist" />
-          <TeamCard image="/item44.jpg" name="Sneha Reddy" role="Tax Consultant" />
+      <section className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+        <h2 className="text-center text-2xl font-bold text-slate-900 sm:text-3xl">Meet the team</h2>
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {TEAM.map((member) => (
+            <article key={member.name} className="rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-sm">
+              <Image
+                src={member.image}
+                alt={member.name}
+                width={180}
+                height={180}
+                className="mx-auto h-24 w-24 rounded-full border-4 border-sky-100 object-cover"
+              />
+              <h3 className="mt-4 text-base font-semibold text-slate-900">{member.name}</h3>
+              <p className="text-sm text-slate-500">{member.role}</p>
+            </article>
+          ))}
         </div>
       </section>
     </div>
