@@ -1,324 +1,266 @@
 "use client";
+
 import Link from "next/link";
-import { useState } from "react";
+import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
+
+const MAIN_LINKS = [
+  ["/", "Home"],
+  ["/about", "About"],
+  ["/Services", "Services"],
+  ["/Product", "Products"],
+  ["/Insurance", "Insurance"],
+  ["/financial-planning", "Financial Planning"],
+  ["/visiting-card", "Visiting Card"],
+  ["/contact", "Contact"],
+];
+
+const CALCULATOR_LINKS = [
+  ["sip-return", "SIP Return Calculator"],
+  ["crorepati", "Become A Crorepati Calculator"],
+  ["sip-step-up", "SIP Step-Up Calculator"],
+  ["emi", "EMI Calculator"],
+  ["target-sip", "Target Amount SIP Calculator"],
+  ["sip-annual", "SIP With Annual Increase"],
+  ["retirement", "Retirement Planning Calculator"],
+  ["goal-setting", "Goal Setting Calculator"],
+  ["financial-goal", "Composite Financial Goal Calculator"],
+  ["education", "Children Education Planner"],
+  ["compounding", "Compounding Calculator"],
+  ["future-value", "Future Value Calculator"],
+  ["lumpsum-target", "Lumpsum Target Calculator"],
+  ["lumpsum", "Lumpsum Calculator"],
+];
+
+const PLANNER_LINKS = [
+  ["Dream-home", "Dream Home"],
+  ["Wealth-Creation", "Wealth Creation"],
+  ["Retiremen", "Retirement"],
+  ["Child-Education", "Child's Education"],
+  ["Child-Wedding", "Child's Wedding"],
+  ["Emergency", "Emergency"],
+];
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [calcOpen, setCalcOpen] = useState(false);
   const [plannerOpen, setPlannerOpen] = useState(false);
 
-  const rawPath = usePathname();
-  const pathname = (rawPath ?? "/");
+  const pathname = usePathname() ?? "/";
+  const normalizedPath = useMemo(() => pathname.toLowerCase(), [pathname]);
 
-  const handleCloseAll = () => {
+  const closeAll = () => {
     setMenuOpen(false);
     setCalcOpen(false);
     setPlannerOpen(false);
   };
 
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  const navItemClass = (active) =>
+    `relative text-sm xl:text-[15px] font-medium transition-colors duration-200 ${
+      active ? "text-sky-700" : "text-slate-800 hover:text-sky-700"
+    } after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-sky-700 after:transition-all after:duration-200 ${
+      active ? "after:w-full" : "after:w-0 hover:after:w-full"
+    }`;
+
   return (
-    <div >
-      <nav className="
-  fixed top-0 left-0 right-0 z-50
-  bg-white/3
-  backdrop-blur-md
-  
-  text-white
-">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-3 sm:h-[70px] sm:px-4 lg:px-6">
+        <Link href="/" className="flex items-center" onClick={closeAll}>
+          <Image
+            src="/newlogo.png"
+            alt="Pioneer Wealth Solutions Logo"
+            width={150}
+            height={42}
+            priority
+            className="h-9 w-auto object-contain sm:h-10"
+          />
+        </Link>
 
-
-
-
-
-        <div className="max-w-7xl mx-auto flex items-center px-6 py-3 ml-2">
-
-          {/* LOGO */}
-          <div className="flex-shrink-0 -ml-3">
-            <Link href="/" onClick={handleCloseAll} className="flex items-center gap-2">
-              <Image
-                src="/newlogo.png" // rename this uploaded image as logopo.png in /public
-                alt="Pioneer Wealth Solutions Logo"
-                width={180}
-                height={190}
-                priority
-                className="object-contain drop-shadow-sm"
-
-              />
-
+        <div className="hidden items-center gap-4 lg:flex xl:gap-6">
+          {MAIN_LINKS.map(([url, label]) => (
+            <Link key={url} href={url} className={navItemClass(normalizedPath === url.toLowerCase())}>
+              {label}
             </Link>
+          ))}
+
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => {
+                setCalcOpen((v) => !v);
+                setPlannerOpen(false);
+              }}
+              className={`${navItemClass(normalizedPath.includes("/calculators"))} inline-flex items-center gap-1`}
+            >
+              Calculators
+              <ChevronDown size={16} className={`transition-transform duration-200 ${calcOpen ? "rotate-180" : ""}`} />
+            </button>
+
+            <div
+              className={`absolute right-0 mt-3 w-80 rounded-xl border border-slate-200 bg-white p-2 shadow-xl transition-all duration-200 ${
+                calcOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"
+              }`}
+            >
+              <ul className="max-h-80 overflow-auto">
+                {CALCULATOR_LINKS.map(([url, text]) => (
+                  <li key={url}>
+                    <Link
+                      href={`/Calculators/${url}`}
+                      onClick={closeAll}
+                      className="block rounded-lg px-3 py-2 text-sm text-slate-700 transition-colors duration-150 hover:bg-sky-50 hover:text-sky-700"
+                    >
+                      {text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
-          <div className="flex-grow"></div>
-
-          {/* DESKTOP MENU */}
-          <div className="hidden lg:flex items-center space-x-6 -mr-40">
-
-            {[
-              ["/", "Home"],
-              ["/about", "About"],
-              ["/Services", "Services"],
-              ["/Product", "Products"],
-              ["/Insurance", "Insurance"],
-              ["/financial-planning", "Financial Planning"],
-            ].map(([url, label]) => (
-              <Link
-                key={url}
-                href={url}
-                className={`
-    relative flex items-center 
-    transition-all duration-300 cursor-pointer
-
-    ${pathname === url
-                    ? "text-blue-600  after:w-full"
-                    : "text-black hover:text-blue-600  after:w-0"
-                  }
-
-    after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-blue-600 after:transition-all
-    hover:after:w-full
-  `}
-              >
-                {label}
-              </Link>
-
-            ))}
-
-            {/* DESKTOP - CALCULATORS */}
-            <div className="relative">
-              <div
-                className={`
-    relative flex items-center cursor-pointer transition-all duration-300  space-x-6
-    ${pathname.includes("calculators")
-                    ? "text-blue-600  after:w-full"
-                    : "text-black hover:text-blue-600  after:w-0"
-                  }
-    after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-blue-600 after:transition-all hover:after:w-full
-  `}
-                onClick={() => {
-                  setCalcOpen(!calcOpen);
-                  setPlannerOpen(false);  // close planner
-                }}
-              >
-                Calculators
-                <ChevronDown
-                  size={18}
-                  className={`ml-1 transition ${calcOpen ? "rotate-180" : ""}`}
-                />
-              </div>
-
-
-
-
-
-              {calcOpen && (
-                <div className="absolute bg-white text-black shadow-xl mt-2 w-80 border border-gray-300 rounded-md z-50">
-                  <ul className="py-2 text-[15px] max-h-[300px] overflow-auto">
-                    {[
-                      ["sip-return", "SIP Return Calculator"],
-                      ["crorepati", "Become A Crorepati Calculator"],
-                      ["sip-step-up", "SIP Step-Up Calculator"],
-                      ["emi", "EMI Calculator"],
-                      ["target-sip", "Target Amount SIP Calculator"],
-                      ["sip-annual", "SIP With Annual Increase"],
-                      ["retirement", "Retirement Planning Calculator"],
-                      ["goal-setting", "Goal Setting Calculator"],
-                      ["financial-goal", "Composite Financial Goal Calculator"],
-                      ["education", "Children Education Planner"],
-                      ["compounding", "Compounding Calculator"],
-                      ["future-value", "Future Value Calculator"],
-                      ["lumpsum-target", "Lumpsum Target Calculator"],
-                      ["lumpsum", "Lumpsum Calculator"],
-                    ].map(([url, text]) => (
-                      <li key={url} className="border-l-4 border-transparent hover:border-blue-600 border-b border-gray-200">
-                        <Link
-                          href={`/Calculators/${url}`}
-                          className="block px-4 py-2 hover:bg-gray-100 hover:text-blue-600"
-                          onClick={handleCloseAll}
-                        >
-                          {text}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-
-            {/* DESKTOP - GOAL PLANNERS */}
-            <div className="relative">
-              <div
-                className={`
-    relative flex items-center cursor-pointer transition-all duration-300 space-x-6
-    ${pathname.includes("goal_planners")
-                    ? "text-blue-600  after:w-full"
-                    : "text-black hover:text-blue-600  after:w-0"
-                  }
-    after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-blue-600 after:transition-all hover:after:w-full
-  `}
-                onClick={() => {
-                  setPlannerOpen(!plannerOpen);
-                  setCalcOpen(false); // close calculators
-                }}
-              >
-                Goal Planners
-                <ChevronDown
-                  size={18}
-                  className={`ml-1 transition ${plannerOpen ? "rotate-180" : ""}`}
-                />
-              </div>
-
-
-
-              {plannerOpen && (
-                <div className="absolute bg-white shadow-xl mt-2 w-80 border text-black border-gray-300 rounded-md z-50">
-                  <ul className="py-2 text-[15px]">
-                    {[
-                      ["Dream-home", "Dream Home"],
-                      ["Wealth-Creation", "Wealth Creation"],
-                      ["Retiremen", "Retirement"],
-                      ["Child-Education", "Child's Education"],
-                      ["Child-Wedding", "Child's Wedding"],
-                      ["Emergency", "Emergency"],
-                    ].map(([url, text]) => (
-                      <li key={url} className="border-l-4 border-transparent hover:border-blue-600 border-b border-gray-200">
-                        <Link
-                          href={`/Goal_Planners/${url}`}
-                          className="block px-4 py-2 hover:bg-gray-100 hover:text-blue-600"
-                          onClick={handleCloseAll}
-                        >
-                          {text}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-
-            <Link
-              href="/contact"
-              className={`
-    relative flex items-center 
-    transition-all duration-300 cursor-pointer space-x-6
-
-    ${pathname === "/contact"
-                  ? "text-blue-600  after:w-full"
-                  : "text-black hover:text-blue-600  after:w-0"
-                }
-
-    after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-blue-600 after:transition-all
-    hover:after:w-full
-  `}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => {
+                setPlannerOpen((v) => !v);
+                setCalcOpen(false);
+              }}
+              className={`${navItemClass(normalizedPath.includes("/goal_planners"))} inline-flex items-center gap-1`}
             >
-              Contact
-            </Link>
+              Goal Planners
+              <ChevronDown size={16} className={`transition-transform duration-200 ${plannerOpen ? "rotate-180" : ""}`} />
+            </button>
 
-
-            <Link
-              href="/login"
-              className={`
-    relative flex items-center 
-    transition-all duration-300 cursor-pointer space-x-6
-
-    ${pathname === "/login"
-                  ? "text-blue-600  after:w-full"
-                  : "text-black hover:text-blue-600  after:w-0"
-                }
-
-    after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-blue-600 after:transition-all
-    hover:after:w-full
-  `}
+            <div
+              className={`absolute right-0 mt-3 w-72 rounded-xl border border-slate-200 bg-white p-2 shadow-xl transition-all duration-200 ${
+                plannerOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"
+              }`}
             >
-              Login
-            </Link>
+              <ul>
+                {PLANNER_LINKS.map(([url, text]) => (
+                  <li key={url}>
+                    <Link
+                      href={`/Goal_Planners/${url}`}
+                      onClick={closeAll}
+                      className="block rounded-lg px-3 py-2 text-sm text-slate-700 transition-colors duration-150 hover:bg-sky-50 hover:text-sky-700"
+                    >
+                      {text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
-          {/* MOBILE MENU TOGGLE */}
-          <button className="lg:hidden text-gray-900 ml-4" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <X size={26} /> : <Menu size={26} />}
-          </button>
-
+          <Link
+            href="/login"
+            className="rounded-lg bg-sky-700 px-4 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-sky-800"
+          >
+            Login
+          </Link>
         </div>
+
+        <button
+          type="button"
+          className="grid h-10 w-10 place-items-center rounded-lg border border-slate-200 text-slate-800 transition-colors duration-200 hover:bg-slate-50 lg:hidden"
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label="Toggle navigation menu"
+          aria-expanded={menuOpen}
+        >
+          {menuOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
       </nav>
 
-      {/* MOBILE MENU */}
-      {menuOpen && (
-        <div className="lg:hidden bg-white shadow-md border-t text-black animate-fadeIn max-h-[90vh] overflow-y-auto mt-22">
-
-          <div className="flex flex-col items-center py-4 space-y-3">
-            <Link href="/" onClick={handleCloseAll} className="text-black">Home</Link>
-            <Link href="/about" onClick={handleCloseAll}>About</Link>
-            <Link href="/Services" onClick={handleCloseAll}>Services</Link>
-            <Link href="/Product" onClick={handleCloseAll}>Products</Link>
-
-            {/* MOBILE - CALCULATORS */}
-            <button
-              onClick={() => { setCalcOpen(!calcOpen); if (plannerOpen) setPlannerOpen(false); }}
-              className="flex items-center gap-1"
+      <div
+        className={`fixed inset-x-0 top-16 z-40 border-t border-slate-200 bg-white/95 backdrop-blur-xl transition-all duration-300 sm:top-[70px] lg:hidden ${
+          menuOpen ? "pointer-events-auto max-h-[calc(100dvh-70px)] translate-y-0 opacity-100" : "pointer-events-none max-h-0 -translate-y-3 opacity-0"
+        } overflow-y-auto`}
+      >
+        <div className="space-y-1 px-3 py-3">
+          {MAIN_LINKS.map(([url, label]) => (
+            <Link
+              key={url}
+              href={url}
+              onClick={closeAll}
+              className={`block rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150 ${
+                normalizedPath === url.toLowerCase() ? "bg-sky-50 text-sky-700" : "text-slate-800 hover:bg-slate-100"
+              }`}
             >
-              Calculators <ChevronDown size={18} />
-            </button>
-
-            {calcOpen && (
-              <div className="w-full px-4 space-y-2">
-                {[
-                  ["sip-return", "SIP Return Calculator"],
-                  ["crorepati", "Become A Crorepati Calculator"],
-                  ["sip-step-up", "SIP Step-Up Calculator"],
-                  ["emi", "EMI Calculator"],
-                  ["target-sip", "Target Amount SIP Calculator"],
-                  ["sip-annual", "SIP With Annual Increase"],
-                  ["retirement", "Retirement Planning Calculator"],
-                  ["goal-setting", "Goal Setting Calculator"],
-                  ["financial-goal", "Composite Financial Goal Calculator"],
-                  ["education", "Children Education Planner"],
-                  ["compounding", "Compounding Calculator"],
-                  ["future-value", "Future Value Calculator"],
-                  ["lumpsum-target", "Lumpsum Target Calculator"],
-                  ["lumpsum", "Lumpsum Calculator"],
-                ].map(([url, text]) => (
-                  <Link key={url} href={`/Calculators/${url}`} onClick={handleCloseAll}>
-                    <p className="bg-gray-100 p-2 rounded-md text-center">{text}</p>
-                  </Link>
-                ))}
-              </div>
-            )}
-
-            {/* MOBILE - GOAL PLANNERS */}
-            <button
-              onClick={() => { setPlannerOpen(!plannerOpen); if (calcOpen) setCalcOpen(false); }}
-              className="flex items-center gap-1"
-            >
-              Goal Planners <ChevronDown size={18} />
-            </button>
-
-            {plannerOpen && (
-              <div className="w-full px-4 space-y-2">
-                {[
-                  ["Dream-home", "Dream Home"],
-                  ["Wealth-Creation", "Wealth Creation"],
-                  ["Retiremen", "Retirement"],
-                  ["Child-Education", "Child's Education"],
-                  ["Child-Wedding", "Child's Wedding"],
-                  ["Emergency", "Emergency"],
-                ].map(([url, text]) => (
-                  <Link key={url} href={`/Goal_Planners/${url}`} onClick={handleCloseAll}>
-                    <p className="bg-gray-100 p-2 rounded-md text-center">{text}</p>
-                  </Link>
-                ))}
-              </div>
-            )}
-
-            <Link href="/contact" onClick={handleCloseAll}>Contact</Link>
-
-            <Link href="/login" onClick={handleCloseAll}>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg">Login</button>
+              {label}
             </Link>
+          ))}
+
+          <button
+            type="button"
+            onClick={() => {
+              setCalcOpen((v) => !v);
+              setPlannerOpen(false);
+            }}
+            className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-medium text-slate-800 hover:bg-slate-100"
+          >
+            Calculators
+            <ChevronDown size={16} className={`transition-transform duration-200 ${calcOpen ? "rotate-180" : ""}`} />
+          </button>
+
+          <div className={`overflow-hidden transition-all duration-300 ${calcOpen ? "max-h-[520px]" : "max-h-0"}`}>
+            <div className="space-y-1 pb-2 pl-2">
+              {CALCULATOR_LINKS.map(([url, text]) => (
+                <Link
+                  key={url}
+                  href={`/Calculators/${url}`}
+                  onClick={closeAll}
+                  className="block rounded-lg px-3 py-2 text-xs text-slate-700 transition-colors duration-150 hover:bg-sky-50 hover:text-sky-700"
+                >
+                  {text}
+                </Link>
+              ))}
+            </div>
           </div>
+
+          <button
+            type="button"
+            onClick={() => {
+              setPlannerOpen((v) => !v);
+              setCalcOpen(false);
+            }}
+            className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-medium text-slate-800 hover:bg-slate-100"
+          >
+            Goal Planners
+            <ChevronDown size={16} className={`transition-transform duration-200 ${plannerOpen ? "rotate-180" : ""}`} />
+          </button>
+
+          <div className={`overflow-hidden transition-all duration-300 ${plannerOpen ? "max-h-72" : "max-h-0"}`}>
+            <div className="space-y-1 pb-2 pl-2">
+              {PLANNER_LINKS.map(([url, text]) => (
+                <Link
+                  key={url}
+                  href={`/Goal_Planners/${url}`}
+                  onClick={closeAll}
+                  className="block rounded-lg px-3 py-2 text-xs text-slate-700 transition-colors duration-150 hover:bg-sky-50 hover:text-sky-700"
+                >
+                  {text}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <Link
+            href="/login"
+            onClick={closeAll}
+            className="mt-2 block rounded-lg bg-sky-700 px-3 py-2 text-center text-sm font-semibold text-white transition-colors duration-200 hover:bg-sky-800"
+          >
+            Login
+          </Link>
         </div>
-      )}
-    </div>
+      </div>
+    </header>
   );
 }

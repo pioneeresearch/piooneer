@@ -126,9 +126,9 @@
     // -------------------- MAIN RETURN --------------------
 
     return (
-      <div className="bg-white">
+      <div className="bg-white overflow-x-hidden">
 
-        <section className="relative min-h-[96vh] flex items-center px-10 py-20 overflow-hidden rounded-3xl -mt-9  transition duration-300 hover:scale-101 object-cover border border-gray-100">
+        <section className="relative min-h-[96vh] flex items-center px-4 py-20 sm:px-8 lg:px-10 overflow-hidden rounded-3xl -mt-9 transition duration-300 object-cover border border-gray-100">
 
           {/* Background Images */}
           {slideData.map((item, i) => (
@@ -144,12 +144,12 @@
           <div className="absolute inset-0 bg-black/40"></div>
 
           
-          <p className="absolute top-20 left-1/2 -translate-x-1/2 z-20 text-gray-200 text-lg font-medium bg-white/20 px-6 py-2 rounded-full shadow-sm mt-6 backdrop-blur">
+          <p className="absolute top-20 left-1/2 z-20 w-[92%] -translate-x-1/2 rounded-full bg-white/20 px-4 py-2 text-center text-sm font-medium text-gray-200 shadow-sm backdrop-blur sm:w-auto sm:px-6 sm:text-lg">
             Trusted Financial Partner Since 2009
           </p>
 
         
-          <div className="relative z-10 ml-5 flex flex-col text-left max-w-3xl mt-15">
+          <div className="relative z-10 ml-1 mt-14 flex max-w-3xl flex-col text-left sm:ml-5">
             <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-2 leading-tight">
               {slideData[index].title}
             </h2>
@@ -167,7 +167,7 @@
               </Link>
             </div>
           </div>
-          <div className="absolute bottom-4 right-5 z-10">
+          <div className="absolute bottom-4 right-4 z-10 hidden sm:block">
 
             <div className="w-[220px] transition-opacity duration-700">
               <InfoCard

@@ -11,7 +11,7 @@ export default function ClientRootLayout({ children }) {
   return (
     <>
       {!isAdminRoute && <Navbar />}
-      <main className="flex-grow pt-14">{children}</main>
+      <main className="flex-grow pt-16 sm:pt-[70px]">{children}</main>
       {!isAdminRoute && <Footer />}
     </>
   );

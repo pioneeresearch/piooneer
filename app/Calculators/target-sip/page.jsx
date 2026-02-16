@@ -341,7 +341,7 @@ export default function TargetAmountSIPCalculatorPage() {
             <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md  text-gray-800"
               onClick={(e) => e.stopPropagation()} >
 
-              <h2 className="text-lg font-bold mb-4 text-center">Fill Your Details</h2>
+              <h2 className="text-lg font-bold mb-4 text-center ">Fill Your Details</h2>
 
               <input type="text" placeholder="Your Name"
                 className="border p-2 rounded w-full mb-3  text-gray-800"

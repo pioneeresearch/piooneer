@@ -260,7 +260,6 @@ export default async function RootLayout({ children }) {
         />
         
         {/* Preload Critical Resources */}
-        <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossOrigin="" />
         <link rel="dns-prefetch" href="//www.google-analytics.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         

@@ -6,6 +6,7 @@ import {
   LayoutDashboard,
   Users,
   FileText,
+  CreditCard,
   Settings,
   LogOut,
 } from "lucide-react";
@@ -14,6 +15,7 @@ const sidebarMenu = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { name: "Leads", href: "/admin/leads", icon: Users },
   { name: "Contact List", href: "/admin/cotactlist", icon: FileText },
+  { name: "Visiting Cards", href: "/admin/visiting-cards", icon: CreditCard },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
@@ -33,12 +35,13 @@ export default function Sidebar() {
   return (
     <aside
       className="
+        hidden md:flex
         fixed left-0 top-16
         w-64
         h-[calc(100vh-4rem)]
         bg-white dark:bg-slate-900
         border-r border-gray-200 dark:border-slate-700
-        flex flex-col
+        flex-col
         z-40
       "
     >

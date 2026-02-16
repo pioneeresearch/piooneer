@@ -1,110 +1,101 @@
+import Link from "next/link";
 import Image from "next/image";
+import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Twitter } from "lucide-react";
+
 export default function Footer() {
   return (
-    <footer className="bg-[#e9f4ff]  text-gray-700 pt-16 pb-8 ">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 max-w-6xl mx-auto border-b border-gray-200 pb-10">
-        
+    <footer className="border-t border-slate-200 bg-gradient-to-b from-sky-50 to-white text-slate-700">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 pb-10 pt-12 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-10">
         <div>
-          <div className="flex items-center gap-2 mb-4">
+          <Link href="/" className="inline-flex items-center">
             <Image
-                  src="/newlogo.png" 
-                  alt="Pioneer Wealth Solutions Logo"
-                  width={100}
-                  height={110}
-                  priority
-                  className="object-contain drop-shadow-sm"
-                
-              />
-          
-          </div>
-          <p className="text-gray-500 text-sm mb-4">
-            Your trusted partner in wealth creation, offering expert financial
-            advice and tailored investment solutions.
+              src="/newlogo.png"
+              alt="Pioneer Wealth Solutions Logo"
+              width={130}
+              height={38}
+              className="h-10 w-auto object-contain"
+            />
+          </Link>
+          <p className="mt-4 text-sm leading-6 text-slate-600">
+            Your trusted partner in wealth creation with expert financial advice and tailored investment solutions.
           </p>
-
-          <div className="flex gap-4 text-gray-500 text-lg">
-            <a href="#" className="hover:text-blue-600">
-              <i className="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" className="hover:text-blue-600">
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a href="#" className="hover:text-blue-600">
-              <i className="fab fa-linkedin-in"></i>
-            </a>
-            <a href="#" className="hover:text-blue-600">
-              <i className="fab fa-instagram"></i>
-            </a>
+          <div className="mt-4 flex items-center gap-2">
+            {[Facebook, Twitter, Linkedin, Instagram].map((Icon, idx) => (
+              <a
+                key={idx}
+                href="#"
+                className="grid h-9 w-9 place-items-center rounded-full border border-slate-200 bg-white text-slate-600 transition-all duration-200 hover:-translate-y-0.5 hover:border-sky-300 hover:text-sky-700"
+                aria-label="social link"
+              >
+                <Icon size={16} />
+              </a>
+            ))}
           </div>
         </div>
 
-        
         <div>
-          <h3 className="font-semibold text-gray-800 mb-4">Quick Links</h3>
-          <ul className="space-y-2 text-sm">
-            <li><a href="#" className="hover:text-blue-600">Home</a></li>
-            <li><a href="#" className="hover:text-blue-600">About Us</a></li>
-            <li><a href="#" className="hover:text-blue-600">Services</a></li>
-            <li><a href="#" className="hover:text-blue-600">Contact</a></li>
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-900">Quick Links</h3>
+          <ul className="mt-4 space-y-2 text-sm">
+            <li><Link href="/" className="transition-colors hover:text-sky-700">Home</Link></li>
+            <li><Link href="/about" className="transition-colors hover:text-sky-700">About Us</Link></li>
+            <li><Link href="/Services" className="transition-colors hover:text-sky-700">Services</Link></li>
+            <li><Link href="/contact" className="transition-colors hover:text-sky-700">Contact</Link></li>
           </ul>
         </div>
 
-      
         <div>
-          <h3 className="font-semibold text-gray-800 mb-4">Our Services</h3>
-          <ul className="space-y-2 text-sm">
-            <li><a href="#" className="hover:text-blue-600">Mutual Funds</a></li>
-            <li><a href="#" className="hover:text-blue-600">Life Insurance</a></li>
-            <li><a href="#" className="hover:text-blue-600">Health Insurance</a></li>
-            <li><a href="#" className="hover:text-blue-600">Tax Planning</a></li>
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-900">Our Services</h3>
+          <ul className="mt-4 space-y-2 text-sm">
+            <li><Link href="/Product" className="transition-colors hover:text-sky-700">Mutual Funds</Link></li>
+            <li><Link href="/Insurance" className="transition-colors hover:text-sky-700">Life Insurance</Link></li>
+            <li><Link href="/Insurance" className="transition-colors hover:text-sky-700">Health Insurance</Link></li>
+            <li><Link href="/financial-planning" className="transition-colors hover:text-sky-700">Tax Planning</Link></li>
           </ul>
         </div>
 
-       
         <div>
-          <h3 className="font-semibold text-gray-800 mb-4">Get In Touch</h3>
-          <ul className="space-y-3 text-sm">
-            <li className="flex items-center gap-2">
-              <i className="fa-solid fa-location-dot text-blue-600"></i>
-              123 Financial District, Mumbai, India
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-900">Get In Touch</h3>
+          <ul className="mt-4 space-y-3 text-sm text-slate-600">
+            <li className="flex items-start gap-2">
+              <MapPin size={16} className="mt-0.5 text-sky-700" />
+              <span>123 Financial District, Mumbai, India</span>
             </li>
-            <li className="flex items-center gap-2">
-              <i className="fa-solid fa-phone text-blue-600"></i>
-              +91 98765 43210
+            <li className="flex items-start gap-2">
+              <Phone size={16} className="mt-0.5 text-sky-700" />
+              <span>+91 98765 43210</span>
             </li>
-            <li className="flex items-center gap-2">
-              <i className="fa-solid fa-envelope text-blue-600"></i>
-              info@pioneerws.in
+            <li className="flex items-start gap-2">
+              <Mail size={16} className="mt-0.5 text-sky-700" />
+              <span>info@pioneerws.in</span>
             </li>
           </ul>
 
-          
           <div className="mt-5">
-            <p className="text-sm mb-2">Subscribe to Newsletter</p>
-            <div className="flex">
+            <p className="text-sm font-medium text-slate-800">Subscribe to Newsletter</p>
+            <form className="mt-2 flex flex-col gap-2 min-[380px]:flex-row">
               <input
                 type="email"
                 placeholder="Your email"
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-l-lg focus:outline-none"
+                className="h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none transition-all focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
               />
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700 text-sm">
+              <button
+                type="button"
+                className="h-10 rounded-lg bg-sky-700 px-4 text-sm font-semibold text-white transition-colors hover:bg-sky-800"
+              >
                 Subscribe
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
 
-     
-      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500 mt-8">
-        <p>© 2025 Pioneer Wealth Solutions. All rights reserved.</p>
-        <div className="flex gap-4 mt-2 sm:mt-0">
-          <a href="#" className="hover:text-blue-600">
-            Privacy Policy
-          </a>
-          <a href="#" className="hover:text-blue-600">
-            Terms of Service
-          </a>
+      <div className="border-t border-slate-200">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-4 text-xs text-slate-500 sm:flex-row sm:px-6 sm:text-sm">
+          <p>(c) 2026 Pioneer Wealth Solutions. All rights reserved.</p>
+          <div className="flex items-center gap-4">
+            <Link href="#" className="transition-colors hover:text-sky-700">Privacy Policy</Link>
+            <Link href="#" className="transition-colors hover:text-sky-700">Terms of Service</Link>
+          </div>
         </div>
       </div>
     </footer>
