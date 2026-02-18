@@ -2,7 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import html2canvas from "html2canvas";
+import domtoimage from "dom-to-image-more";
 import { Building2, MessageCircle, Phone, Sparkles, UserRound } from "lucide-react";
 
 const COMPANY = {
@@ -71,7 +71,13 @@ export default function VisitingCardPage() {
     }, 220);
   };
 
-  const handleDownload = async ({ force = false } = {}) => {
+  const handleDownload = async (arg) => {
+    if (arg && typeof arg.preventDefault === "function") {
+      arg.preventDefault();
+    }
+
+    const force = Boolean(arg && typeof arg === "object" && "force" in arg && arg.force);
+
     if (!previewReady && !force) {
       setShowPopup(true);
       return;
@@ -120,16 +126,15 @@ export default function VisitingCardPage() {
 
       await waitForAssets(cardRef.current);
 
-      const canvas = await html2canvas(cardRef.current, {
-        backgroundColor: "#ffffff",
+      const dataUrl = await domtoimage.toPng(cardRef.current, {
+        bgcolor: "#ffffff",
+        cacheBust: true,
+        copyDefaultStyles: false,
+        disableEmbedFonts: true,
         scale: Math.min(window.devicePixelRatio || 2, 3),
-        useCORS: true,
-        allowTaint: true,
-        logging: false,
       });
 
       const filename = `${name.trim().replace(/\s+/g, "-").toLowerCase()}-visiting-card.png`;
-      const dataUrl = canvas.toDataURL("image/png");
       const link = document.createElement("a");
       link.setAttribute("href", dataUrl);
       link.setAttribute("download", filename);
@@ -238,7 +243,7 @@ export default function VisitingCardPage() {
 
                   <div className="col-span-5 flex h-full flex-col items-center justify-center px-3 text-center">
                     <div className="grid h-14 w-14 place-items-center rounded-full border-4 border-[#0D4B8D] bg-white shadow-md sm:h-16 sm:w-16">
-                      {/* Keep native img for stable html2canvas rendering in download output */}
+                      {/* Keep native img for stable download rendering in output */}
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src="/newlogo.png" alt="Pioneer Logo" width={40} height={40} className="h-9 w-9 object-contain sm:h-10 sm:w-10" />
                     </div>
@@ -277,7 +282,9 @@ export default function VisitingCardPage() {
           {/* update */}
 
           <button
-            onClick={handleDownload}
+            onClick={() => {
+              void handleDownload();
+            }}
             disabled={isDownloading}
             className="mt-6 w-full rounded-xl px-4 py-3 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-60"
             style={{ background: "linear-gradient(120deg, #0E2A47 0%, #256D85 100%)", boxShadow: "0 12px 24px rgba(14,42,71,0.22)" }}
