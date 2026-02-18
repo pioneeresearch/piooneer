@@ -49,7 +49,7 @@ export default function VisitingCardPage() {
 
   const cleanPhone = useMemo(() => phone.replace(/[^\d+\-\s()]/g, ""), [phone]);
   const validPhone = useMemo(() => /^[0-9+\-\s()]{7,20}$/.test(cleanPhone), [cleanPhone]);
-  const displayPhone = useMemo(() => cleanPhone.trim() || COMPANY.phone, [cleanPhone]);
+  const enteredPhone = useMemo(() => cleanPhone.trim(), [cleanPhone]);
 
   const handleCreateCard = (e) => {
     e.preventDefault();
@@ -101,7 +101,7 @@ export default function VisitingCardPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             userName: name.trim(),
-            userPhone: displayPhone,
+            userPhone: enteredPhone,
             companyName: COMPANY.name,
             subtitle: COMPANY.subtitle,
             companyPhone: COMPANY.phone,
@@ -218,7 +218,7 @@ export default function VisitingCardPage() {
                         <span className="grid h-6 w-6 place-items-center rounded-md bg-[#123F72]">
                           <Phone size={12} />
                         </span>
-                        <span>{displayPhone}</span>
+                        <span>{COMPANY.phone}</span>
                       </p>
                       <p className="flex items-center gap-2.5">
                         <span className="grid h-6 w-6 place-items-center rounded-md bg-[#123F72]">
@@ -276,7 +276,7 @@ export default function VisitingCardPage() {
             </div>
             <div className="flex items-start justify-between gap-4">
               <span className="text-sm" style={{ color: "#4F667A" }}>Mobile</span>
-              <span className="text-right text-sm font-semibold text-slate-900">{displayPhone}</span>
+              <span className="text-right text-sm font-semibold text-slate-900">{enteredPhone || "-"}</span>
             </div>
           </div>
           {/* update */}
